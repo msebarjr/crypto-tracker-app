@@ -1,0 +1,91 @@
+.nav {  
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo span, .logo p {
+  font-size: 1.5rem;
+}
+
+.logo span {
+  color: var(--primary);
+  margin-left: .25rem;
+}
+
+.logo p {
+  color: white;
+  margin-right: .25rem;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary);
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link {
+  margin-right: 1rem;
+  margin-left: 1rem;
+  width: 125px;
+  padding: .5em 1.5em;
+  border: 1px solid var(--primary);
+  outline: var(--primary);
+  background-color: transparent;
+  color: var(--primary)
+}
+
+.link:hover {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+.logout_button {
+  background-color: transparent;
+  color: var(--primary);
+  outline-color: var(--primary);
+  border: none;
+}
+
+@media screen and (max-width: 768px) {
+  .links {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    background-color: var(--primary);
+  }
+
+  .link {
+    width: 40%;
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .nav {
+    flex-direction: column;
+  }
+
+  .logout_button {
+    margin-top: 1rem;
+  }
+}

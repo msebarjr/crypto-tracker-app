@@ -6,16 +6,18 @@
 }
 
 body {
-  --primary: rgba(33, 33, 33, 1);
-  --secondary: rgba(242, 169, 0, 1);
-  background-color: var(--primary);
+  --primary: rgba(242, 169, 0, 1);
+  --secondary: rgba(33, 33, 33, 1);
+  background-color: var(--secondary);
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 .app_container {
   width: 100%;
   max-width: 1600px;
-  height: 100vh;
-  margin: 0 auto;
+  padding: 1rem 2rem;
+  margin: auto;
+  /* border: 1px solid white; */
 }
