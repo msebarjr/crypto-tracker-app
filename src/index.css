@@ -5,8 +5,9 @@
 }
 
 body {
-  --primary: yellow;
-  background-color: rgba(33, 33, 33, 1);
+  --primary: rgba(33, 33, 33, 1);
+  --secondary: rgba(242, 169, 0, 1);
+  background-color: var(--primary);
   padding-left: 5%;
   padding-right: 5%;
 }
@@ -14,5 +15,6 @@ body {
 .app_container {
   border: 1px solid red;   
   max-width: calc(1600px + 10%);  
+  height: 100vh;
   margin: 0 auto;
 }

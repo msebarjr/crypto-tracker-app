@@ -1,11 +1,5 @@
-import Head from "./Head";
-
 function App() {
-    return (
-        <div className="app_container">
-            <Head />
-        </div>
-    );
+    return <div className="app_container">Hello</div>;
 }
 
 export default App;
