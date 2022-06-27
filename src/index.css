@@ -13,7 +13,6 @@ body {
 }
 
 .app_container {
-  border: 1px solid red;   
   max-width: calc(1600px + 10%);  
   height: 100vh;
   margin: 0 auto;
