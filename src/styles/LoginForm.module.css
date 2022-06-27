@@ -1,0 +1,27 @@
+.hint {
+  font-size: .75rem;
+  margin-top: 0.5rem;
+}
+
+.login_button {
+  background-color: var(--secondary);
+  color: var(--primary)
+}
+
+.demo_login_button {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+.no_account {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: .75rem;
+}
+
+.no_account span {
+  color: var(--secondary);
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+}

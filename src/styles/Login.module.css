@@ -1,4 +1,14 @@
 .container {
   width: 100%;
   height: calc(100% - 100px);  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_card {
+  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  padding: 3rem;
 }
