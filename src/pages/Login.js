@@ -6,12 +6,10 @@ import Title from "../components/Title";
 
 function Login() {
     return (
-        <div className={styles.container}>
-            <Card style={styles.login_card}>
-                <Title>Login</Title>
-                <LoginForm />
-            </Card>
-        </div>
+        <Card style={styles.login_card}>
+            <Title>Login</Title>
+            <LoginForm />
+        </Card>
     );
 }
 

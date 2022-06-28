@@ -1,8 +1,8 @@
 import styles from "../../styles/Input.module.css";
 
-function Input({ label, config }) {
+function Input({ label, config, style }) {
     return (
-        <div className={styles.input}>
+        <div className={[`${styles.input} ${style}`]}>
             <label htmlFor={label}>{label}</label>
             <input {...config} />
         </div>

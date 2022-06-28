@@ -9,6 +9,7 @@ function LoginForm() {
             <Input
                 label="Email:"
                 config={{ type: "email", placeholder: "Enter your email" }}
+                style={styles.login_input}
             />
             <Input
                 label="Password:"
@@ -16,6 +17,7 @@ function LoginForm() {
                     type: "password",
                     placeholder: "Enter your password",
                 }}
+                style={styles.login_input}
             />
             <p className={styles.hint}>Must be atleast 6 characters.</p>
             <Button style={styles.login_button}>Login</Button>
