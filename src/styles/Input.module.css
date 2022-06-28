@@ -1,0 +1,25 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 375px;
+}
+
+.input label {
+  font-size: .75rem;
+}
+
+.input input {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: .5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid var(--secondary);
+}
+
+.input input:focus {
+  outline-color: var(--primary);
+}
+
+

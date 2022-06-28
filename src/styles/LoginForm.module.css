@@ -1,0 +1,64 @@
+.hint {
+  font-size: .75rem;
+  margin-top: 0.5rem;
+  max-width: 375px;
+}
+
+.login_button, .demo_login_button {
+  width: 100%;
+  max-width: 375px;
+  padding: .7rem 1rem;
+  border: none;
+  margin-top: 1.5rem;
+}
+
+.login_button {
+  background-color: var(--primary);
+  color: var(--secondary); 
+}
+
+.demo_login_button {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.no_account {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: .75rem;
+}
+
+.no_account span {
+  color: var(--primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {  
+  form {
+    text-align: center;
+  }
+
+  .hint {
+    margin: .75rem auto;
+    text-align-last: left;
+  }
+  
+  .login_input {
+    margin: 1.5rem auto 0;
+  }
+  
+  .login_input label {
+    color: white;
+    text-align-last: left;
+  }
+
+  .hint, .no_account {
+    color: white;
+  }
+
+  .demo_login_button {
+    border: 1px solid var(--primary);
+  }
+}

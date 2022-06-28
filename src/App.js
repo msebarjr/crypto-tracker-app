@@ -1,10 +1,10 @@
-import Navigation from "./components/Navigation";
+import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 
 function App() {
     return (
         <div className="app_container">
-            <Navigation />
+            <Navbar />
             <Login />
         </div>
     );
