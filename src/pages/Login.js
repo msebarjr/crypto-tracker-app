@@ -1,8 +1,8 @@
 import Card from "../components/UI/Card";
 import LoginForm from "../components/Forms/LoginForm";
+import Title from "../components/Title";
 
 import styles from "../styles/Login.module.css";
-import Title from "../components/Title";
 
 function Login() {
     return (
