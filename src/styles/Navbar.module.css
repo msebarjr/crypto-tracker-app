@@ -4,6 +4,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .logo {
@@ -63,27 +65,34 @@
 
 @media screen and (max-width: 768px) {
   .links {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
-    height: 100px;
-    width: 100%;
-    background-color: var(--primary);
+    right: 0;
+    height: 50px;   ;
+    /* background-color: var(--primary); */
+    -webkit-box-shadow: 0px -5px 15px 2px var(--primary); 
+    box-shadow: 0px 1px 2px 2px var(--primary);
+  }
+  
+  .link {
+    flex: 1;    
+    margin: 0;    
+    height: 100%;
+    color: var(--primary);  
+    border: none;
+    border-radius: 0 !important;
   }
 
-  .link {
-    width: 40%;
-    border: 2px solid var(--secondary);
-    color: var(--secondary);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+  .link:first-child {
+    border-right: 1px solid var(--primary);
   }
 }
 
 @media screen and (max-width: 450px) {
   .nav {
-    flex-direction: column;
-  }
+    flex-direction: column;;
+  }  
 
   .logout_button {
     margin-top: 1rem;
