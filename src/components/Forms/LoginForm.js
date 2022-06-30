@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 
@@ -20,10 +22,15 @@ function LoginForm() {
                 style={styles.login_input}
             />
             <p className={styles.hint}>Must be atleast 6 characters.</p>
+
             <Button style={styles.login_button}>Login</Button>
+
             <Button style={styles.demo_login_button}>Demo Login</Button>
             <p className={styles.no_account}>
-                Don't have an account? <span>Sign Up</span>
+                Don't have an account?{" "}
+                <Link to="/signup" className="link">
+                    <span>Sign Up</span>
+                </Link>
             </p>
         </form>
     );

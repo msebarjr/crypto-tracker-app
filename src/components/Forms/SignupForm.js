@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 
@@ -30,7 +32,10 @@ function SignupForm() {
             />
             <Button style={styles.login_button}>Create Account</Button>
             <p className={styles.no_account}>
-                Already have an account? <span>Login</span>
+                Already have an account?{" "}
+                <Link to="/" className="link">
+                    <span>Login</span>
+                </Link>
             </p>
         </form>
     );

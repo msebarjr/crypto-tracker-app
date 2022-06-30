@@ -1,9 +1,8 @@
 import Card from "../components/UI/Card";
-import LoginForm from "../components/Forms/LoginForm";
+import SignupForm from "../components/Forms/SignupForm";
 import Title from "../components/Title";
 
 import styles from "../styles/Login.module.css";
-import SignupForm from "../components/Forms/SignupForm";
 
 function Signup() {
     return (
