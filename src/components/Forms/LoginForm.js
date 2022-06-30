@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Button from "../UI/Button";
@@ -5,13 +6,36 @@ import Input from "../UI/Input";
 
 import styles from "../../styles/LoginForm.module.css";
 
-function LoginForm() {
+function LoginForm({ onSubmit, credentialsIsInvalid }) {
+    const [enteredEmail, setEnteredEmail] = useState("");
+    const [enteredPassword, setEnteredPassword] = useState("");
+
+    const { emailIsInvalid, passwordIsInvalid } = credentialsIsInvalid;
+
+    function emailInputHandler(e) {
+        setEnteredEmail(e.target.value);
+    }
+
+    function passwordInputHandler(e) {
+        setEnteredPassword(e.target.value);
+    }
+
+    function loginHandler(e) {
+        e.preventDefault();
+        onSubmit(enteredEmail, enteredPassword);
+    }
+
     return (
-        <form>
+        <form onSubmit={loginHandler}>
             <Input
                 label="Email:"
                 config={{ type: "email", placeholder: "Enter your email" }}
                 style={styles.login_input}
+                onChange={emailInputHandler}
+                inValidStyle={styles.invalid}
+                value={enteredEmail}
+                isInvalid={emailIsInvalid}
+                invalidText="Please enter a valid email!"
             />
             <Input
                 label="Password:"
@@ -20,8 +44,20 @@ function LoginForm() {
                     placeholder: "Enter your password",
                 }}
                 style={styles.login_input}
+                inValidStyle={styles.invalid}
+                onChange={passwordInputHandler}
+                value={enteredPassword}
+                isInvalid={passwordIsInvalid}
             />
-            <p className={styles.hint}>Must be atleast 6 characters.</p>
+            <p
+                className={[
+                    passwordIsInvalid
+                        ? `${styles.hint}  ${styles.invalid}`
+                        : styles.hint,
+                ]}
+            >
+                Must be atleast 6 characters.
+            </p>
 
             <Button style={styles.login_button}>Login</Button>
 
