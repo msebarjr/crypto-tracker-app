@@ -7,7 +7,7 @@ import styles from "../styles/Navbar.module.css";
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-    const { logout } = useAuth();
+    const { logout, currentUser } = useAuth();
     const navigate = useNavigate();
 
     async function handleLogout() {
@@ -29,15 +29,22 @@ function Navbar() {
                 </p>
                 <RiCoinsLine className={styles.icon} />
             </div>
-            <div className={styles.links}>
-                <Button style={styles.link}>Coins</Button>
-                <Button style={styles.link}>Portfolio</Button>
-            </div>
-            <div className={styles.logout}>
-                <Button onClick={handleLogout} style={styles.logout_button}>
-                    Logout
-                </Button>
-            </div>
+            {currentUser && (
+                <>
+                    <div className={styles.links}>
+                        <Button style={styles.link}>Coins</Button>
+                        <Button style={styles.link}>Portfolio</Button>
+                    </div>
+                    <div className={styles.logout}>
+                        <Button
+                            onClick={handleLogout}
+                            style={styles.logout_button}
+                        >
+                            Logout
+                        </Button>
+                    </div>
+                </>
+            )}
         </nav>
     );
 }
