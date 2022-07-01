@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import Input from "./UI/Input";
+import Input from "../UI/Input";
 
-import styles from "../styles/CoinSearch.module.css";
+import styles from "../../styles/CoinSearch.module.css";
 
 function CoinSearch() {
     const [searchInput, enteredSearchInput] = useState("");
