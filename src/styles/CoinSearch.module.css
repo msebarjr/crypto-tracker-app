@@ -1,0 +1,20 @@
+.coin_search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 3rem;
+}
+
+.coin_search h2 {
+  color:var(--primary)
+}
+
+@media screen and (max-width: 750px) {
+  .coin_search {
+    flex-direction: column;
+  }
+
+  .coin_search_input {
+    margin-top: 1rem;
+  }
+}
