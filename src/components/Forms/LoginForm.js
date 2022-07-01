@@ -32,7 +32,6 @@ function LoginForm({ onSubmit, credentialsIsInvalid }) {
                 config={{ type: "email", placeholder: "Enter your email" }}
                 style={styles.login_input}
                 onChange={emailInputHandler}
-                inValidStyle={styles.invalid}
                 value={enteredEmail}
                 isInvalid={emailIsInvalid}
                 invalidText="Please enter a valid email!"
@@ -44,7 +43,6 @@ function LoginForm({ onSubmit, credentialsIsInvalid }) {
                     placeholder: "Enter your password",
                 }}
                 style={styles.login_input}
-                inValidStyle={styles.invalid}
                 onChange={passwordInputHandler}
                 value={enteredPassword}
                 isInvalid={passwordIsInvalid}
