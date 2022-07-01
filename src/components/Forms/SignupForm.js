@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 
 import styles from "../../styles/LoginForm.module.css";
-import { useState } from "react";
 
 function SignupForm({ onSubmit, credentialsIsInvalid }) {
     const [enteredEmail, setEnteredEmail] = useState("");
