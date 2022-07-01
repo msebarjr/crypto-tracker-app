@@ -9,6 +9,15 @@
   transform: translate(-50%, -50%);
 }
 
+.error_text {
+  margin-top: 1rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  padding: .75rem 1rem;
+  margin-bottom: -2rem;
+  background-color: rgb(235, 145, 145);
+}
+
 @media screen and (max-width: 500px) {
   .login_card {
     background-color: transparent; 

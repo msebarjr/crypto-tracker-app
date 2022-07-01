@@ -29,6 +29,7 @@
 .invalid_text {
   margin-top: 0.25rem;
   font-size: .75rem;
+  text-align: left;
   color: rgb(255, 6, 6);
 }
 
