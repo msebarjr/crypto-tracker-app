@@ -22,4 +22,14 @@
   outline-color: var(--primary);
 }
 
+.invalid {
+  background-color: rgb(235, 145, 145);
+}
+
+.invalid_text {
+  margin-top: 0.25rem;
+  font-size: .75rem;
+  color: rgb(255, 6, 6);
+}
+
 
