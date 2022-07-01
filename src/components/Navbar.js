@@ -1,9 +1,24 @@
+import { useAuth } from "../contexts/AuthContext";
 import { RiCoinsLine } from "react-icons/ri";
 
-import styles from "../styles/Navbar.module.css";
 import Button from "./UI/Button";
 
+import styles from "../styles/Navbar.module.css";
+import { useNavigate } from "react-router-dom";
+
 function Navbar() {
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    async function handleLogout() {
+        try {
+            await logout();
+            navigate("./");
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
     return (
         <nav className={styles.nav}>
             <div className={styles.logo}>
@@ -19,7 +34,9 @@ function Navbar() {
                 <Button style={styles.link}>Portfolio</Button>
             </div>
             <div className={styles.logout}>
-                <Button style={styles.logout_button}>Logout</Button>
+                <Button onClick={handleLogout} style={styles.logout_button}>
+                    Logout
+                </Button>
             </div>
         </nav>
     );

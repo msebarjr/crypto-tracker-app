@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Card from "../components/UI/Card";
 import SignupForm from "../components/Forms/SignupForm";
@@ -16,6 +17,7 @@ function Signup() {
     });
     const [error, setError] = useState("");
 
+    const navigate = useNavigate();
     const { signup } = useAuth();
 
     async function submitSignupHandler(email, password) {
@@ -29,10 +31,13 @@ function Signup() {
                 emailIsInvalid: !emailIsValid,
                 passwordIsInvalid: !passwordIsValid,
             });
+
+            return;
         }
 
         try {
             await signup(email, password);
+            navigate("/coins");
         } catch (e) {
             if (e.message === "Firebase: Error (auth/email-already-in-use).")
                 setError("An account has been created with that email already");

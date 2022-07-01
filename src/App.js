@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
+import Coins from "./pages/Coins";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
@@ -15,6 +16,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+                    <Route path="/coins" element={<Coins />} />
                 </Routes>
             </div>
         </AuthContextProvider>
