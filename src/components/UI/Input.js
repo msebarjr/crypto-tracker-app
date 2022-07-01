@@ -1,5 +1,9 @@
 import styles from "../../styles/Input.module.css";
 
+const marginStyle = {
+    marginTop: ".5rem",
+};
+
 function Input({
     label,
     config,
@@ -17,6 +21,7 @@ function Input({
                 onChange={onChange}
                 value={value}
                 className={isInvalid ? styles.invalid : undefined}
+                style={label && marginStyle}
             />
             {isInvalid && <p className={styles.invalid_text}>{invalidText}</p>}
         </div>

@@ -43,6 +43,10 @@ form {
   color: rgb(255, 6, 6);
 }
 
+.login_input {
+  margin-top: 2rem;
+}
+
 @media screen and (max-width: 500px) {  
   form {
     text-align: center;
