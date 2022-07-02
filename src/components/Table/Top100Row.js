@@ -44,7 +44,7 @@ function Top100Row({ coin }) {
             </td>
             <td>
                 <Sparklines data={coin.sparkline_in_7d.price}>
-                    <SparklinesLine color="#23a55cd8" />
+                    <SparklinesLine color="#17c763d8" />
                 </Sparklines>
             </td>
         </tr>

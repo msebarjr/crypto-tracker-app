@@ -49,3 +49,7 @@ table tbody tr:hover {
 .fixed_cell {
   width: 180px;
 }
+
+.sparkline {
+  color: blue;
+}
