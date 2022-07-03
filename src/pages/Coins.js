@@ -5,26 +5,24 @@ import CoinSearch from "../components/Coins/CoinSearch";
 import Pagination from "../components/Pagination";
 import Top100Coins from "../components/Coins/Top100Coins";
 
-// import styles from "../styles/Coins.module.css";
-
-const COINS_PER_PAGE = 5;
-const URL = process.env.REACT_APP_COIN_API_KEY;
+// const URL = process.env.REACT_APP_COIN_API_KEY;
 
 function Coins() {
     const [coins, setCoins] = useState([]);
     const [filteredCoins, setFilteredCoins] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [coinsPerPage, setCoinsPerPage] = useState(5);
 
     useEffect(() => {
-        axios.get(URL).then((response) => {
+        axios.get(process.env.REACT_APP_COIN_API_KEY).then((response) => {
             setCoins(response.data);
             setFilteredCoins(response.data);
         });
     }, [setFilteredCoins]);
 
     // Get the current coin
-    const indexOfLastCoin = currentPage * COINS_PER_PAGE;
-    const indexOfFirstCoin = indexOfLastCoin - COINS_PER_PAGE;
+    const indexOfLastCoin = currentPage * coinsPerPage;
+    const indexOfFirstCoin = indexOfLastCoin - coinsPerPage;
     const currentCoins = filteredCoins.slice(indexOfFirstCoin, indexOfLastCoin);
 
     function paginationHandler(page) {
@@ -35,14 +33,20 @@ function Coins() {
         setFilteredCoins(filteredData);
     }
 
+    function numberOfResultsHandler(number) {
+        setCoinsPerPage(number);
+        setCurrentPage(1);
+    }
+
     return (
         <div>
-            <CoinSearch coins={coins} filterCoin={filterCoinHandler} />            
+            <CoinSearch coins={coins} filterCoin={filterCoinHandler} />
             <Top100Coins coins={currentCoins} />
             <Pagination
-                coinsPerPage={COINS_PER_PAGE}
+                coinsPerPage={coinsPerPage}
                 totalCoins={filteredCoins.length}
                 paginate={paginationHandler}
+                numberOfResults={numberOfResultsHandler}
             />
         </div>
     );

@@ -7,13 +7,20 @@
   margin-top: 2rem;  
 }
 
+.results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
 .pagination_container ul {
   list-style: none;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;    
- flex: 1;
+  flex: 1;
 }
 
 .page_number {
