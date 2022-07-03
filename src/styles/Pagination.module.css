@@ -1,0 +1,31 @@
+.pagination_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-top: 2rem;  
+}
+
+.pagination_container ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;  
+  flex: 1;  
+}
+
+.page_number {
+  padding: .5em 1em;
+  cursor: pointer;
+  border-radius: 3px;
+  color: white;
+}
+
+.page_number:hover {
+  background-color: var(--primary);
+}
+
+.active_page {
+  background-color: var(--primary);
+}
