@@ -67,6 +67,9 @@ function Pagination({ totalCoins, coinsPerPage, paginate, numberOfResults }) {
                     </li>
                 ))}
             </ul>
+            <div>
+                <p>Total Results: {totalCoins}</p>
+            </div>
         </div>
     );
 }

@@ -5,7 +5,7 @@ import CoinSearch from "../components/Coins/CoinSearch";
 import Pagination from "../components/Pagination";
 import Top100Coins from "../components/Coins/Top100Coins";
 
-// const URL = process.env.REACT_APP_COIN_API_KEY;
+
 
 function Coins() {
     const [coins, setCoins] = useState([]);
@@ -41,7 +41,7 @@ function Coins() {
     return (
         <div>
             <CoinSearch coins={coins} filterCoin={filterCoinHandler} />
-            <Top100Coins coins={currentCoins} />
+                        <Top100Coins coins={currentCoins} />
             <Pagination
                 coinsPerPage={coinsPerPage}
                 totalCoins={filteredCoins.length}
