@@ -1,25 +1,38 @@
 import { useState } from "react";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { Sparklines, SparklinesLine } from "react-sparklines";
+import { toast } from "react-toastify";
 
 import styles from "../../styles/Top100Table.module.css";
 
 function Top100Row({ coin }) {
-    const [saveCoin, setSaveCoin] = useState(false);
+    const [favoriteCoin, setFavoriteCoin] = useState(false);
 
-    function saveCoinHandler() {
-        setSaveCoin((prevState) => !prevState);
+    function addCoinToFavorites(coinName) {
+        setFavoriteCoin(true);
+        toast.info(`${coinName} added to Favorites`);
+    }
+
+    function removeCoinFromFavorites(coinName) {
+        setFavoriteCoin(false);
+        toast.error(`${coinName} removed as Favorite`);
     }
 
     const priceColor = coin.price_change_percentage_24h > 0 ? "green" : "red";
 
     return (
         <tr>
-            <td className={styles.center} onClick={saveCoinHandler}>
-                {saveCoin ? (
-                    <AiFillStar className={`${styles.fav} ${styles.icon}`} />
+            <td className={styles.center}>
+                {favoriteCoin ? (
+                    <AiFillStar
+                        className={`${styles.fav} ${styles.icon}`}
+                        onClick={removeCoinFromFavorites.bind(this, coin.name)}
+                    />
                 ) : (
-                    <AiOutlineStar className={styles.icon} />
+                    <AiOutlineStar
+                        className={styles.icon}
+                        onClick={addCoinToFavorites.bind(this, coin.name)}
+                    />
                 )}
             </td>
             <td>{coin.market_cap_rank}</td>
