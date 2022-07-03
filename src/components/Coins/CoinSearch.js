@@ -4,11 +4,24 @@ import Input from "../UI/Input";
 
 import styles from "../../styles/CoinSearch.module.css";
 
-function CoinSearch() {
+function CoinSearch({ coins, filterCoin }) {
     const [searchInput, enteredSearchInput] = useState("");
 
     function searchInputHandler(e) {
-        enteredSearchInput(e.target.value);
+        if (e.target.value) {
+            const filteredData = coins.filter((coin) => {
+                const coinData = coin.name
+                    ? coin.name.toLowerCase()
+                    : "".toLowerCase();
+                const inputText = e.target.value.toLowerCase();
+                return coinData.indexOf(inputText) > -1;
+            });
+            enteredSearchInput(e.target.value);
+            filterCoin(filteredData);
+        } else {
+            filterCoin(coins);
+            enteredSearchInput(e.target.value);
+        }
     }
 
     return (

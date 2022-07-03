@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../styles/Pagination.module.css";
 
-function Pagination({ totalCoins, coinsPerPage, paginate, from, to }) {
+function Pagination({ totalCoins, coinsPerPage, paginate }) {
     const [activePage, setActivePage] = useState(1);
     const pageNumbers = [];
 
@@ -15,9 +15,6 @@ function Pagination({ totalCoins, coinsPerPage, paginate, from, to }) {
 
     return (
         <div className={styles.pagination_container}>
-            <p>
-                Showing results {from}-{to} of {totalCoins}
-            </p>
             <ul>
                 {pageNumbers.map((page) => (
                     <li

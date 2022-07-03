@@ -2,3 +2,12 @@
   margin-top: 3rem;
   overflow: hidden;
 }
+
+.no_coins {
+  text-align: center;
+  font-weight: bold;
+  background-color: var(--primary);
+  color: var(--secondary);
+  letter-spacing: 2px;
+  padding: 1em;
+}
