@@ -1,4 +1,14 @@
 .top_100_card {
-  margin-top: 3rem;
-  padding: 1rem;
+  margin-top: 1rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.no_coins {
+  text-align: center;
+  font-weight: bold;
+  background-color: var(--primary);
+  color: var(--secondary);
+  letter-spacing: 2px;
+  padding: 1em;
 }

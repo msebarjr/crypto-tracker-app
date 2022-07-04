@@ -1,0 +1,45 @@
+.results_info_container {
+  color:white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rem;
+  padding: 0 .5rem;
+}
+
+.results_pp, .results_pp ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.results_pp ul {
+  list-style: none;
+}
+
+.results_pp ul li {
+  padding: .5em 1em;
+  cursor: pointer;
+  border-radius: 3px;
+  color: white;
+}
+
+.results_pp ul li:hover {
+  background-color: var(--primary);
+}
+
+.active_page {
+  border-bottom: 2px solid var(--primary);
+}
+
+@media screen and (max-width: 450px) {
+  .results_info_container {
+    flex-direction: column-reverse;
+   
+  }
+
+  .results_pp {
+    margin-top: 1rem;
+  }
+}

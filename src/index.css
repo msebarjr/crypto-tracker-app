@@ -10,14 +10,14 @@ html, body {
   font-weight: 400;
   line-height: 1;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 body {
   --primary: rgba(242, 169, 0, 1);
   --secondary: rgba(33, 33, 33, 1);
   background-color: var(--secondary);
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   position: relative;
 }
 
@@ -26,8 +26,16 @@ body {
   max-width: 1600px;
   padding: 1rem 2rem;
   margin: 0 auto; 
+  overflow-x: hidden;
 }
 
 .link {
   text-decoration: none;
 }
+
+@media screen and (max-width: 860px) {
+  .app_container {
+    padding: 1rem;
+    }
+}
+

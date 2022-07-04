@@ -1,0 +1,68 @@
+table {  
+  width: 100%;  
+  border-collapse: collapse;   
+}
+
+th {
+    text-align-last: left;
+    background-color: var(--primary)
+}
+
+tr {
+  height: 60px; 
+}
+
+
+table tr:nth-child(odd) {
+  background-color: lightgrey;
+}
+
+table tbody tr {
+  cursor: pointer;
+}
+
+table tbody tr:hover {
+  background-color: grey;
+}
+
+.coin_image {
+  display: flex;
+  align-items: center;
+}
+
+.coin_image img {
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin-right: 1rem;
+}
+
+
+.fav {
+  color: var(--primary)
+}
+
+.center {
+  text-align: center;
+  padding: .25rem;
+}
+
+.fixed_cell {
+  max-width: 180px;
+}
+
+.sparkline {
+  color: blue;
+}
+
+@media screen and (max-width: 1024px) {
+  .hide_tablet {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .hide_mobile {
+    display: none;
+  }  
+}
