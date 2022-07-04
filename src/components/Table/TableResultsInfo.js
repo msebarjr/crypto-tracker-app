@@ -42,9 +42,7 @@ function TableResultsInfo({
                     </li>
                 </ul>
             </div>
-            <p className={`${styles.results} ${styles.sm_text}`}>
-                Total Results: {totalCoins}
-            </p>
+            <p>Total Results: {totalCoins}</p>
         </div>
     );
 }

@@ -24,6 +24,12 @@
   flex: 1;
 }
 
+.pagination_container div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .page_number {
   padding: .5em 1em;
   cursor: pointer;
@@ -39,8 +45,10 @@
   background-color: var(--primary);
 }
 
-@media screen and (max-width: 768px) {
-  .sm_text {
-    font-size: 0.8rem;
+@media screen and (max-width: 450px) {
+  .pagination_container ul {
+    flex-direction: column;
   }
+
+  
 }

@@ -32,3 +32,14 @@
 .active_page {
   border-bottom: 2px solid var(--primary);
 }
+
+@media screen and (max-width: 450px) {
+  .results_info_container {
+    flex-direction: column-reverse;
+   
+  }
+
+  .results_pp {
+    margin-top: 1rem;
+  }
+}

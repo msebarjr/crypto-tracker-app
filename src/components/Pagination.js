@@ -10,21 +10,23 @@ function Pagination({ totalCoins, coinsPerPage, paginate, activePageNumber }) {
         <div className={styles.pagination_container}>
             <ul>
                 <p>Page</p>
-                {pageNumbers.map((page) => (
-                    <li
-                        key={page}
-                        className={
-                            activePageNumber === page
-                                ? [
-                                      `${styles.page_number} ${styles.active_page}`,
-                                  ]
-                                : styles.page_number
-                        }
-                        onClick={paginate.bind(this, page)}
-                    >
-                        {page}
-                    </li>
-                ))}
+                <div>
+                    {pageNumbers.map((page) => (
+                        <li
+                            key={page}
+                            className={
+                                activePageNumber === page
+                                    ? [
+                                          `${styles.page_number} ${styles.active_page}`,
+                                      ]
+                                    : styles.page_number
+                            }
+                            onClick={paginate.bind(this, page)}
+                        >
+                            {page}
+                        </li>
+                    ))}
+                </div>
             </ul>
         </div>
     );
