@@ -1,5 +1,7 @@
 import Top100Row from "./Top100Row";
 
+import styles from "../../styles/Top100Table.module.css";
+
 function Top100Table({ data }) {
     return (
         <table>
@@ -8,12 +10,12 @@ function Top100Table({ data }) {
                     <th></th>
                     <th>#</th>
                     <th>Coin</th>
-                    <th>Symbol</th>
-                    <th>Price</th>
+                    <th className={styles.hide_mobile}>Symbol</th>
+                    <th> Price</th>
                     <th>24h</th>
-                    <th>24h Volume</th>
-                    <th>Mkt</th>
-                    <th>Last 7 Days</th>
+                    <th className={styles.hide_tablet}>24h Volume</th>
+                    <th className={styles.hide_tablet}>Mkt</th>
+                    <th className={styles.hide_mobile}>Last 7 Days</th>
                 </tr>
             </thead>
             <tbody>

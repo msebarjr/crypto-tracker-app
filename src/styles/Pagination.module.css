@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  
 }
 
 .pagination_container ul {
@@ -36,4 +37,10 @@
 
 .active_page {
   background-color: var(--primary);
+}
+
+@media screen and (max-width: 768px) {
+  .sm_text {
+    font-size: 0.8rem;
+  }
 }

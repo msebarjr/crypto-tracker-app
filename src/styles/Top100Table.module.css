@@ -44,12 +44,25 @@ table tbody tr:hover {
 
 .center {
   text-align: center;
+  padding: .25rem;
 }
 
 .fixed_cell {
-  width: 180px;
+  max-width: 180px;
 }
 
 .sparkline {
   color: blue;
+}
+
+@media screen and (max-width: 1024px) {
+  .hide_tablet {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .hide_mobile {
+    display: none;
+  }  
 }

@@ -38,24 +38,28 @@ function Top100Row({ coin }) {
             <td>{coin.market_cap_rank}</td>
             <td className={styles.link}>
                 <div className={styles.coin_image}>
-                    <img src={coin.image} alt={coin.id} />
-                    {coin.name}
+                    <img
+                        src={coin.image}
+                        alt={coin.id}
+                        className={styles.hide_mobile}
+                    />
+                    <p>{coin.name}</p>
                 </div>
             </td>
-            <td>{coin.symbol.toUpperCase()}</td>
+            <td className={styles.hide_mobile}>{coin.symbol.toUpperCase()}</td>
             <td>${coin.current_price.toLocaleString()}</td>
             <td>
                 <p style={{ color: priceColor }}>
                     {coin.price_change_percentage_24h}
                 </p>
             </td>
-            <td className={styles.fixed_cell}>
+            <td className={`${styles.fixed_cell} ${styles.hide_tablet}`}>
                 ${coin.total_volume.toLocaleString()}
             </td>
-            <td className={styles.fixed_cell}>
+            <td className={`${styles.fixed_cell} ${styles.hide_tablet}`}>
                 ${coin.market_cap.toLocaleString()}
             </td>
-            <td>
+            <td className={styles.hide_mobile}>
                 <Sparklines data={coin.sparkline_in_7d.price}>
                     <SparklinesLine color="#17c763d8" />
                 </Sparklines>

@@ -1,6 +1,7 @@
 .top_100_card {
-  margin-top: 4rem;
+  margin-top: 1rem;
   overflow: hidden;
+  position: relative;
 }
 
 .no_coins {
