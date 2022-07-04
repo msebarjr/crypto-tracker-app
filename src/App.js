@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
 
 import { AuthContextProvider } from "./contexts/AuthContext";
+import CoinPage from "./components/Coins/CoinPage";
 
 function App() {
     return (
@@ -28,6 +29,9 @@ function App() {
                                 <Coins />
                             }
                         />
+                        <Route path="/coin/:coinId" element={<CoinPage />}>
+                            <Route path=":coinId" />
+                        </Route>
                     </Routes>
                 </div>
             </AuthContextProvider>
