@@ -1,0 +1,83 @@
+.stats_container {
+  color: white;
+  flex: 1;
+}
+
+.title_price_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rank {
+  display: inline-block;
+  background-color: var(--primary);
+  padding: .5em;
+  border-radius: 5px;
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.title img {
+  width: 32px;
+  height: 32px;
+} 
+
+.title p {
+  margin-left: .5em;
+  font-size: 1.25rem;
+}
+
+.coin_title {
+  font-size: 2rem !important;
+}
+
+.price, .price_change {
+  display: flex;
+  align-items: center;
+}
+
+.price {
+  margin-top: 1rem;
+}
+
+.price_current_price {
+  font-size: 1.75rem;
+}
+
+.price_change {
+  font-size: 1.1rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.buy_button, .sell_button {
+  padding: .4em 1em;  
+  border: none;
+  outline: none;
+}
+
+.buy_button {
+  background-color: rgb(17, 233, 17);
+}
+
+.sell_button {
+  background-color: rgb(245, 34, 34);
+}
+
+.icon {
+  margin-left: .5em;
+  font-size: 24px;
+}
+

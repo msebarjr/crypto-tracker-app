@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
+import CoinData from "../components/Coins/CoinData";
+import CoinInfo from "../components/Coins/CoinInfo";
+import CoinPriceChange from "../components/Coins/CoinPriceChange";
+
+import styles from "../styles/CoinPage.module.css";
+
 function CoinPage() {
     const location = useLocation();
     const coinId = location.state;
@@ -16,7 +22,13 @@ function CoinPage() {
         });
     }, [url]);
 
-    return <div>Hello</div>;
+    return (
+        <div>
+            <CoinData coin={coin} />
+            <CoinPriceChange coin={coin} />
+            <CoinInfo coin={coin} />
+        </div>
+    );
 }
 
 export default CoinPage;
