@@ -12,6 +12,10 @@ tr {
   height: 60px; 
 }
 
+.td, .td:visited  {
+  text-decoration: none;
+  color: black; 
+}
 
 table tr:nth-child(odd) {
   background-color: lightgrey;

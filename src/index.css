@@ -8,6 +8,7 @@
 
 html, body {
   font-weight: 400;
+  font-size: 100%;
   line-height: 1;
   width: 100vw;
   min-height: 100vh;
@@ -26,7 +27,7 @@ body {
   max-width: 1600px;
   padding: 1rem 2rem;
   margin: 0 auto; 
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .link {

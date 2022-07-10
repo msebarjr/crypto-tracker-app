@@ -9,7 +9,7 @@ import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
 
 import { AuthContextProvider } from "./contexts/AuthContext";
-import CoinPage from "./components/Coins/CoinPage";
+import CoinPage from "./pages/CoinPage";
 
 function App() {
     return (

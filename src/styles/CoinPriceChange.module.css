@@ -1,0 +1,33 @@
+.price_change_container {
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.market_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;  
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.market_row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 3rem;
+  flex-basis: auto;
+}
+
+.market_row p {
+  color: var(--primary)
+}
+
+span {
+  margin-top: 0.75rem;
+}
+
+@media screen and (max-width: 1070px) {
+  
+}

@@ -1,0 +1,15 @@
+.data_container { 
+  color: white;  
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;   
+  gap: 50px;
+  margin-top: 3rem;
+}
+
+@media screen and (max-width: 1130px) {
+  .data_container {
+    flex-direction: column;
+    width: 100%
+  }
+}
