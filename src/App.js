@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 
 import { AuthContextProvider } from "./contexts/AuthContext";
 import CoinPage from "./pages/CoinPage";
+import Portfolio from "./pages/Portfolio";
 
 function App() {
     return (
@@ -27,6 +28,15 @@ function App() {
                                 //     <Coins />
                                 // </ProtectedRoute>
                                 <Coins />
+                            }
+                        />
+                        <Route
+                            path="/portfolio"
+                            element={
+                                // <ProtectedRoute>
+                                //     <Portfolio />
+                                // </ProtectedRoute>
+                                <Portfolio />
                             }
                         />
                         <Route path="/coin/:coinId" element={<CoinPage />}>
