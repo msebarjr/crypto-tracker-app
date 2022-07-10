@@ -25,7 +25,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   padding: 1em 0;
-  margin-top: 0.5rem;
+  margin-top: 0.5rem;  
 }
 
 .market_row p {
@@ -36,4 +36,24 @@ h3 {
 
 .pricing {
   font-weight: 600 !important;
+}
+
+@media screen and (max-width: 1130px) {
+  .market_info_container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  h3 {
+    text-align: center;
+  }
+
+  .market_row {
+    justify-content: space-between;
+  }
+
+  .market_row p {
+    margin: 0;
+  }
 }

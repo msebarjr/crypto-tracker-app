@@ -23,7 +23,7 @@ function CoinPage() {
     }, [url]);
 
     return (
-        <div>
+        <div className={styles.coin_page_container}>
             <CoinData coin={coin} />
             <CoinPriceChange coin={coin} />
             <CoinInfo coin={coin} />

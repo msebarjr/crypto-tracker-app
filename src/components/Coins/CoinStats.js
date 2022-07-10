@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
     AiOutlineStar,
     AiFillStar,
@@ -11,8 +12,15 @@ import CoinSparkline from "./CoinSparkline";
 import styles from "../../styles/CoinStats.module.css";
 
 function CoinStats({ coin }) {
-    const price_change_style =
-        coin.market_data?.price_change_percentage > 0 ? "green" : "red";
+    const [priceColor, setPriceColor] = useState("");
+
+    useEffect(() => {
+        setPriceColor(
+            coin.market_data?.price_change_percentage_24h > 0
+                ? "rgb(17, 233, 17)"
+                : "red"
+        );
+    }, [coin.market_data?.price_change_percentage_24h]);
 
     return (
         <div className={styles.stats_container}>
@@ -32,22 +40,16 @@ function CoinStats({ coin }) {
                             {coin.market_data.current_price.usd.toLocaleString()}
                         </p>
                     ) : null}
-                    <div className={styles.price_change}>
+                    <div
+                        className={styles.price_change}
+                        style={{ color: priceColor }}
+                    >
                         {coin.market_data?.price_change_percentage_24h > 0 ? (
-                            <AiFillCaretUp
-                                color="green"
-                                className={styles.icon}
-                            />
+                            <AiFillCaretUp className={styles.icon} />
                         ) : (
-                            <AiFillCaretDown
-                                color="red"
-                                className={styles.icon}
-                            />
+                            <AiFillCaretDown className={styles.icon} />
                         )}
-                        <p
-                            style={{ color: price_change_style }}
-                            className={styles.change_percentage}
-                        >
+                        <p className={styles.change_percentage}>
                             {coin.market_data?.price_change_percentage_24h.toFixed(
                                 1
                             )}

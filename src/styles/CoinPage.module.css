@@ -1,0 +1,9 @@
+.coin_page_container {
+  padding: 2rem;
+}
+
+@media screen and (max-width: 525px) {
+  .coin_page_container {
+    padding: 0rem;
+  }
+}
