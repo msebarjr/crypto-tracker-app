@@ -50,7 +50,7 @@ h3 {
   }
 
   .market_row {
-    justify-content: space-between;
+    flex-direction: column;
   }
 
   .market_row p {
