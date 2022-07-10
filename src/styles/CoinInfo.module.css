@@ -20,3 +20,9 @@
   color: var(--primary);
   text-decoration: none;
 }
+
+@media screen and (max-width: 525px) {
+  .coin_info_container {
+    padding: 0 .5rem;
+  }
+}
