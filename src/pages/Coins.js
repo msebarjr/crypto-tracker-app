@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+
+import { useUser } from "../contexts/UserContext";
 
 import CoinSearch from "../components/Coins/CoinSearch";
 import Pagination from "../components/Pagination";
@@ -13,11 +15,20 @@ function Coins() {
     const [coinsPerPage, setCoinsPerPage] = useState(5);
     const [activePage, setActivePage] = useState(1);
 
+    const effectRan = useRef(false);
+    const { updateDocument } = useUser();
+
     useEffect(() => {
-        axios.get(process.env.REACT_APP_COIN_API_KEY).then((response) => {
-            setCoins(response.data);
-            setFilteredCoins(response.data);
-        });
+        if (effectRan.current === false) {
+            axios.get(process.env.REACT_APP_COIN_API_KEY).then((response) => {
+                setCoins(response.data);
+                setFilteredCoins(response.data);
+            });
+        }
+
+        return () => {
+            effectRan.current = true;
+        };
     }, [setFilteredCoins]);
 
     // Get the current coin
@@ -43,6 +54,10 @@ function Coins() {
         setActivePage(1);
     }
 
+    async function update() {
+        await updateDocument();
+    }
+
     return (
         <div>
             <CoinSearch coins={coins} filterCoin={filterCoinHandler} />
@@ -60,6 +75,7 @@ function Coins() {
                 paginate={paginationHandler}
                 activePageNumber={activePage}
             />
+            <button onClick={update}>Update</button>
         </div>
     );
 }
