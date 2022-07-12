@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+
+import { useAuth } from "../contexts/AuthContext";
+import { useUser } from "../contexts/UserContext";
 
 import CoinSearch from "../components/Coins/CoinSearch";
 import Pagination from "../components/Pagination";
@@ -13,12 +16,28 @@ function Coins() {
     const [coinsPerPage, setCoinsPerPage] = useState(5);
     const [activePage, setActivePage] = useState(1);
 
+    const effectRan = useRef(false);
+    const { currentUser } = useAuth();
+    const { getUser } = useUser();
+
     useEffect(() => {
-        axios.get(process.env.REACT_APP_COIN_API_KEY).then((response) => {
-            setCoins(response.data);
-            setFilteredCoins(response.data);
-        });
-    }, [setFilteredCoins]);
+        if (effectRan.current === false) {
+            axios.get(process.env.REACT_APP_COIN_API_KEY).then((response) => {
+                setCoins(response.data);
+                setFilteredCoins(response.data);
+            });
+
+            async function getUserInfo() {
+                await getUser(currentUser.uid);
+            }
+
+            getUserInfo();
+        }
+
+        return () => {
+            effectRan.current = true;
+        };
+    }, [setFilteredCoins, getUser, currentUser.uid]);
 
     // Get the current coin
     const indexOfLastCoin = currentPage * coinsPerPage;

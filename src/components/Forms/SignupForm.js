@@ -7,10 +7,16 @@ import Input from "../UI/Input";
 import styles from "../../styles/LoginForm.module.css";
 
 function SignupForm({ onSubmit, credentialsIsInvalid }) {
+    const [enteredName, setEnteredName] = useState("");
     const [enteredEmail, setEnteredEmail] = useState("");
     const [enteredPassword, setEnteredPassword] = useState("");
 
-    const { emailIsInvalid, passwordIsInvalid } = credentialsIsInvalid;
+    const { nameIsInvalid, emailIsInvalid, passwordIsInvalid } =
+        credentialsIsInvalid;
+
+    function nameInputHandler(e) {
+        setEnteredName(e.target.value);
+    }
 
     function emailInputHandler(e) {
         setEnteredEmail(e.target.value);
@@ -22,11 +28,20 @@ function SignupForm({ onSubmit, credentialsIsInvalid }) {
 
     function signupHandler(e) {
         e.preventDefault();
-        onSubmit(enteredEmail, enteredPassword);
+        onSubmit(enteredName, enteredEmail, enteredPassword);
     }
 
     return (
         <form onSubmit={signupHandler}>
+            <Input
+                label="Name:"
+                config={{ type: "text", placeholder: "First Name" }}
+                style={styles.login_input}
+                onChange={nameInputHandler}
+                value={enteredName}
+                isInvalid={nameIsInvalid}
+                invalidText="Name must be atleast 2 characters long!"
+            />
             <Input
                 label="Email:"
                 config={{ type: "email", placeholder: "Enter your email" }}

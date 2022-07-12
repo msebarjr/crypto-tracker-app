@@ -1,49 +1,62 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { AuthContextProvider } from "./contexts/AuthContext";
+import { UserContextProvider } from "./contexts/UserContext";
+
+import CoinPage from "./pages/CoinPage";
 import Coins from "./pages/Coins";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
-// import ProtectedRoute from "./components/ProtectedRoute";
-import Signup from "./pages/Signup";
-
-import { AuthContextProvider } from "./contexts/AuthContext";
-import CoinPage from "./pages/CoinPage";
 import Portfolio from "./pages/Portfolio";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Signup from "./pages/Signup";
 
 function App() {
     return (
         <>
             <AuthContextProvider>
-                <div className="app_container">
-                    <Navbar />
-                    <Routes>
-                        <Route path="/" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route
-                            path="/coins"
-                            element={
-                                // <ProtectedRoute>
-                                //     <Coins />
-                                // </ProtectedRoute>
-                                <Coins />
-                            }
-                        />
-                        <Route
-                            path="/portfolio"
-                            element={
-                                // <ProtectedRoute>
-                                //     <Portfolio />
-                                // </ProtectedRoute>
-                                <Portfolio />
-                            }
-                        />
-                        <Route path="/coin/:coinId" element={<CoinPage />}>
-                            <Route path=":coinId" />
-                        </Route>
-                    </Routes>
-                </div>
+                <UserContextProvider>
+                    <div className="app_container">
+                        <Navbar />
+                        <Routes>
+                            {/* <Route
+                                exact
+                                path="/"
+                                element={<Navigate to="/login" />}
+                            /> */}
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<Signup />} />
+                            <Route
+                                path="/coins"
+                                element={
+                                    <ProtectedRoute>
+                                        <Coins />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/portfolio"
+                                element={
+                                    <ProtectedRoute>
+                                        <Portfolio />
+                                    </ProtectedRoute>
+                                }
+                            />
+                            <Route
+                                path="/coin/:coinId"
+                                element={
+                                    <ProtectedRoute>
+                                        <CoinPage />
+                                    </ProtectedRoute>
+                                }
+                            >
+                                <Route path=":coinId" />
+                            </Route>
+                        </Routes>
+                    </div>
+                </UserContextProvider>
             </AuthContextProvider>
             <ToastContainer position="top-right" theme="colored" pauseOnHover />
         </>
