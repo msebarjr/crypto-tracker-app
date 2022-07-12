@@ -1,10 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import {   
-    collection,    
-    getDoc,
-    setDoc,
-    doc,
-} from "firebase/firestore";
+import { collection, getDoc, setDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const UserContext = createContext();
@@ -33,13 +28,25 @@ export function UserContextProvider({ children }) {
                 uid: user.uid,
                 name: name,
                 email: email,
+                coinsWatching: [],
+                coinsOwn: [],
             });
         } catch (e) {
             console.log("Error Adding Document: ", e);
         }
     }
 
-    const value = { getUser, addDocument, user };
+    async function updateDocument(userUID, data) {
+        const docRef = doc(db, "users", userUID);
+
+        try {
+            await setDoc(docRef, data, { merge: true });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const value = { getUser, addDocument, user, updateDocument };
 
     return (
         <UserContext.Provider value={value}>{children}</UserContext.Provider>
