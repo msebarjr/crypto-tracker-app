@@ -1,5 +1,10 @@
 import { createContext, useContext, useState } from "react";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import {   
+    collection,    
+    getDoc,
+    setDoc,
+    doc,
+} from "firebase/firestore";
 import { db } from "../firebase";
 
 const UserContext = createContext();
@@ -9,32 +14,32 @@ export function useUser() {
 }
 
 export function UserContextProvider({ children }) {
-    const [docRef, setDocRef] = useState("");
+    const [user, setUser] = useState({});
+
+    async function getUser(userUID) {
+        const docRef = doc(db, "users", userUID);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            setUser(docSnap.data());
+        } else console.log("No document");
+    }
 
     async function addDocument(user, name, email) {
+        const userRef = collection(db, "users");
+
         try {
-            const collectionRef = await addDoc(collection(db, "users"), {
+            await setDoc(doc(userRef, user.uid), {
                 uid: user.uid,
                 name: name,
                 email: email,
             });
-            const id = JSON.stringify(collectionRef.id);
-            setDocRef(id);
         } catch (e) {
             console.log("Error Adding Document: ", e);
         }
     }
 
-    async function updateDocument() {
-        console.log("Inside update");
-        const userRef = doc(db, "users");
-
-        await updateDoc(userRef, {
-            name: "Humpty",
-        });
-    }
-
-    const value = { docRef, addDocument, updateDocument };
+    const value = { getUser, addDocument, user };
 
     return (
         <UserContext.Provider value={value}>{children}</UserContext.Provider>

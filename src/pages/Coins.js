@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
+import { useAuth } from "../contexts/AuthContext";
 import { useUser } from "../contexts/UserContext";
 
 import CoinSearch from "../components/Coins/CoinSearch";
@@ -16,7 +17,8 @@ function Coins() {
     const [activePage, setActivePage] = useState(1);
 
     const effectRan = useRef(false);
-    const { updateDocument } = useUser();
+    const { currentUser } = useAuth();
+    const { getUser } = useUser();
 
     useEffect(() => {
         if (effectRan.current === false) {
@@ -24,12 +26,18 @@ function Coins() {
                 setCoins(response.data);
                 setFilteredCoins(response.data);
             });
+
+            async function getUserInfo() {
+                await getUser(currentUser.uid);
+            }
+
+            getUserInfo();
         }
 
         return () => {
             effectRan.current = true;
         };
-    }, [setFilteredCoins]);
+    }, [setFilteredCoins, getUser, currentUser.uid]);
 
     // Get the current coin
     const indexOfLastCoin = currentPage * coinsPerPage;
@@ -54,10 +62,6 @@ function Coins() {
         setActivePage(1);
     }
 
-    async function update() {
-        await updateDocument();
-    }
-
     return (
         <div>
             <CoinSearch coins={coins} filterCoin={filterCoinHandler} />
@@ -75,7 +79,6 @@ function Coins() {
                 paginate={paginationHandler}
                 activePageNumber={activePage}
             />
-            <button onClick={update}>Update</button>
         </div>
     );
 }
