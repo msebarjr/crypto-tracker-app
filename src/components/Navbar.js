@@ -1,14 +1,22 @@
 import { useAuth } from "../contexts/AuthContext";
 import { RiCoinsLine } from "react-icons/ri";
+import { useNavigate, NavLink } from "react-router-dom";
 
 import Button from "./UI/Button";
 
 import styles from "../styles/Navbar.module.css";
-import { useNavigate } from "react-router-dom";
 
 function Navbar() {
     const { logout, currentUser } = useAuth();
     const navigate = useNavigate();
+    const activeLink = {
+        color: "rgba(33, 33, 33, 1)",
+        backgroundColor: "rgba(242, 169, 0, 1)",
+    };
+    const link = {
+        backgroundColor: "rgba(33, 33, 33, 1)",
+        color: "rgba(242, 169, 0, 1)",
+    };
 
     async function handleLogout() {
         try {
@@ -32,8 +40,26 @@ function Navbar() {
             {currentUser && (
                 <>
                     <div className={styles.links}>
-                        <Button style={styles.link}>Coins</Button>
-                        <Button style={styles.link}>Portfolio</Button>
+                        <NavLink
+                            exact
+                            to="/coins"
+                            className={styles.link}
+                            style={({ isActive }) =>
+                                isActive ? activeLink : link
+                            }
+                        >
+                            Coins
+                        </NavLink>
+                        <NavLink
+                            exact
+                            to="/portfolio"
+                            className={styles.link}
+                            style={({ isActive }) =>
+                                isActive ? activeLink : link
+                            }
+                        >
+                            Portfolio
+                        </NavLink>
                     </div>
                     <div className={styles.logout}>
                         <Button
