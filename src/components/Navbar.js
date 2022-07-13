@@ -41,7 +41,7 @@ function Navbar() {
                 <>
                     <div className={styles.links}>
                         <NavLink
-                            exact
+                            exact="true"
                             to="/coins"
                             className={styles.link}
                             style={({ isActive }) =>
@@ -51,7 +51,7 @@ function Navbar() {
                             Coins
                         </NavLink>
                         <NavLink
-                            exact
+                            exact="true"
                             to="/portfolio"
                             className={styles.link}
                             style={({ isActive }) =>
