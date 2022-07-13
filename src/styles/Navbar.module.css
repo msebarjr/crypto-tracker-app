@@ -43,12 +43,18 @@
 .link {
   margin-right: 1rem;
   margin-left: 1rem;
-  width: 125px;
-  padding: .5em 1.5em;
-  border: 1px solid var(--primary);
+  width: 150px;
+  text-align: center;
+  padding: .75em 1.25em;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 1.5px solid var(--primary);  
+  border-radius: 8px;
+  letter-spacing: 2px;  
   outline: var(--primary);
   background-color: transparent;
-  color: var(--primary)
+  color: var(--primary);
 }
 
 .link:hover {
