@@ -1,22 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 import { toast } from "react-toastify";
 
 import styles from "../../styles/Top100Table.module.css";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useAuth } from "../../contexts/AuthContext";
+import { useUser } from "../../contexts/UserContext";
 
 function Top100Row({ coin }) {
-    const [favoriteCoin, setFavoriteCoin] = useState(false);
+    const [favoriteCoin, setFavoriteCoin] = useState([]);
+
+    const { currentUser } = useAuth();
+    const { updateDocument } = useUser();
+
+    useEffect(() => {
+        const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+            console.log("Current data: ", doc.data().coinsWatching);
+            setFavoriteCoin(doc.data().coinsWatching);
+        });
+
+        return () => {
+            unsub();
+        };
+    }, [currentUser.uid]);
 
     function addCoinToFavorites(coinName) {
-        setFavoriteCoin(true);
+        const coins = [...favoriteCoin, coin.id];
         toast.info(`${coinName} added to Favorites`);
+        updateDocument(currentUser.uid, { coinsWatching: coins });
     }
 
     function removeCoinFromFavorites(coinName) {
-        setFavoriteCoin(false);
+        const coins = favoriteCoin.filter((favCoin) => favCoin !== coin.id);
         toast.error(`${coinName} removed as Favorite`);
+        updateDocument(currentUser.uid, { coinsWatching: coins });
     }
 
     const priceColor = coin.price_change_percentage_24h > 0 ? "green" : "red";
@@ -24,7 +44,7 @@ function Top100Row({ coin }) {
     return (
         <tr>
             <td className={styles.center}>
-                {favoriteCoin ? (
+                {favoriteCoin && favoriteCoin.includes(coin.id) ? (
                     <AiFillStar
                         className={`${styles.fav} ${styles.icon}`}
                         onClick={removeCoinFromFavorites.bind(this, coin.name)}

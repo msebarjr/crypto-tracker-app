@@ -47,7 +47,7 @@ function Signup() {
 
         try {
             const res = await signup(email, password);
-            const user = res.user;            
+            const user = res.user;
 
             await addDocument(user, name, email);
 

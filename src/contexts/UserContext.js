@@ -17,14 +17,13 @@ export function UserContextProvider({ children }) {
 
         if (docSnap.exists()) {
             setUser(docSnap.data());
-        } else console.log("No document");
+        } else console.log("No Document");
     }
 
     async function addDocument(user, name, email) {
-        const userRef = collection(db, "users");
-
+        const colRef = collection(db, "users");
         try {
-            await setDoc(doc(userRef, user.uid), {
+            await setDoc(doc(colRef, user.uid), {
                 uid: user.uid,
                 name: name,
                 email: email,
