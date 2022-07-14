@@ -14,12 +14,13 @@ function Top100Row({ coin }) {
     const [favoriteCoin, setFavoriteCoin] = useState([]);
 
     const { currentUser } = useAuth();
-    const { updateDocument } = useUser();
+    const { updateDocument, updateUser } = useUser();
 
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
             console.log("Current data: ", doc.data().coinsWatching);
             setFavoriteCoin(doc.data().coinsWatching);
+            updateUser(doc.data());
         });
 
         return () => {

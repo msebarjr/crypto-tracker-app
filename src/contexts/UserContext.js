@@ -20,6 +20,10 @@ export function UserContextProvider({ children }) {
         } else console.log("No Document");
     }
 
+    function updateUser(userInfo) {
+        setUser(userInfo);
+    }
+
     async function addDocument(user, name, email) {
         const colRef = collection(db, "users");
         try {
@@ -45,7 +49,7 @@ export function UserContextProvider({ children }) {
         }
     }
 
-    const value = { getUser, addDocument, user, updateDocument };
+    const value = { getUser, addDocument, user, updateDocument, updateUser };
 
     return (
         <UserContext.Provider value={value}>{children}</UserContext.Provider>
