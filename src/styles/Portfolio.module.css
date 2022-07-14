@@ -1,15 +1,40 @@
 .portfolio_container {
-  padding: 2rem 0;
+  margin-top: 4rem;
   color: white;
 }
 
-h3 {
-  margin-top: 1rem;
-  color: white;
-  text-align: right;
+.welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-style: groove;
+  border-color: var(--primary);
+  padding: 1rem;
+}
+
+.welcome h4 {  
+  color: white;  
   font-size: 1.5rem;
 }
 
-h3 span {
+.welcome span {
   color: var(--primary)
+}
+
+.balance_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.balance {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.main {
+  display: flex;  
+  gap: 100px;
+  margin-top: 5rem;
 }

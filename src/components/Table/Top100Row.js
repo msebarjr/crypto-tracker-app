@@ -11,7 +11,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useUser } from "../../contexts/UserContext";
 
 function Top100Row({ coin }) {
-    const [favoriteCoin, setFavoriteCoin] = useState([]);
+    const [favoriteCoins, setFavoriteCoins] = useState([]);
 
     const { currentUser } = useAuth();
     const { updateDocument, updateUser } = useUser();
@@ -19,24 +19,26 @@ function Top100Row({ coin }) {
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
             console.log("Current data: ", doc.data().coinsWatching);
-            setFavoriteCoin(doc.data().coinsWatching);
+            setFavoriteCoins(doc.data().coinsWatching);
             updateUser(doc.data());
         });
 
         return () => {
             unsub();
         };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser.uid]);
 
-    function addCoinToFavorites(coinName) {
-        const coins = [...favoriteCoin, coin.id];
-        toast.info(`${coinName} added to Favorites`);
+    function addCoinToFavorites() {
+        const coins = [...favoriteCoins, coin.id];
+        toast.info(`${coin.name} added to Favorites`);
         updateDocument(currentUser.uid, { coinsWatching: coins });
     }
 
-    function removeCoinFromFavorites(coinName) {
-        const coins = favoriteCoin.filter((favCoin) => favCoin !== coin.id);
-        toast.error(`${coinName} removed as Favorite`);
+    function removeCoinFromFavorites() {
+        const coins = favoriteCoins.filter((favCoin) => favCoin !== coin.id);
+        toast.error(`${coin.name} removed as Favorite`);
         updateDocument(currentUser.uid, { coinsWatching: coins });
     }
 
@@ -45,15 +47,15 @@ function Top100Row({ coin }) {
     return (
         <tr>
             <td className={styles.center}>
-                {favoriteCoin && favoriteCoin.includes(coin.id) ? (
+                {favoriteCoins && favoriteCoins.includes(coin.id) ? (
                     <AiFillStar
                         className={`${styles.fav} ${styles.icon}`}
-                        onClick={removeCoinFromFavorites.bind(this, coin.name)}
+                        onClick={removeCoinFromFavorites}
                     />
                 ) : (
                     <AiOutlineStar
                         className={styles.icon}
-                        onClick={addCoinToFavorites.bind(this, coin.name)}
+                        onClick={addCoinToFavorites}
                     />
                 )}
             </td>

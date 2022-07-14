@@ -29,6 +29,7 @@ export function UserContextProvider({ children }) {
         try {
             await setDoc(doc(colRef, user.uid), {
                 uid: user.uid,
+                balance: 50000,
                 name: name,
                 email: email,
                 coinsWatching: [],

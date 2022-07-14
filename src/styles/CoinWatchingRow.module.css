@@ -1,0 +1,40 @@
+.watching_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  border-bottom: 1px solid var(--primary);
+  padding: 1rem 0;
+}
+
+.image_wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.image_wrapper img {
+  width: 24px;
+}
+
+.image_wrapper .coin_name {
+  margin-left: 0.5rem;
+}
+
+.pricing_wrapper, .price_change {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pricing_wrapper {  
+  width: 45%;
+}
+
+.price_change {
+  justify-content: space-between;
+  width: 45%;
+}
+
+.icon {
+  font-size: 24px;
+}
+

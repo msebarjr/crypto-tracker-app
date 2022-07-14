@@ -1,3 +1,13 @@
+//  coinsOwn = [
+//   {
+//     name
+//     purchasePrice
+//   }
+// ]
+//  1 coin = price of coin to buy
+// selling price - initial purchase price = gain or loss
+// gain or loss / initial purchase price * 100 = % change in investment
+ 
 {
   "id": "bitcoin",
   "symbol": "btc",
