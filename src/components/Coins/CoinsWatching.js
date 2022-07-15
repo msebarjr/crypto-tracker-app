@@ -36,7 +36,6 @@ function CoinsWatching({ coins }) {
                     const coinWatching = coins.find(
                         (coin) => coin.id === favCoin
                     );
-                    console.log("Coin Watching: ", coinWatching);
                     return (
                         <CoinWatchingRow
                             key={favCoin}
@@ -45,7 +44,7 @@ function CoinsWatching({ coins }) {
                     );
                 })
             ) : (
-                <p>No Coins Watching</p>
+                <p>Not currently watching any coins.</p>
             )}
         </div>
     );

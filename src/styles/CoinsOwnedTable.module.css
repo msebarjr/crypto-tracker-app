@@ -1,0 +1,36 @@
+table {  
+  width: 100%;  
+  border-collapse: collapse;   
+}
+
+th {
+  text-align-last: left;
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding-left: .5em;
+}
+
+tr {  
+  height: 60px; 
+}
+
+table tr:nth-child(odd) {
+  background-color: lightgrey;
+}
+
+table tr:nth-child(even) {
+  background-color: white;
+}
+
+table tbody tr {
+  cursor: pointer;
+}
+
+table tbody tr:hover {
+  background-color: grey;
+}
+
+td {
+  color: black;
+  padding: .5rem;
+}

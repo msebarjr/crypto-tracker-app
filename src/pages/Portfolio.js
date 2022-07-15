@@ -21,7 +21,7 @@ function Portfolio({ coins }) {
             </div>
             <main className={styles.main}>
                 <CoinsWatching coins={coins} />
-                <CoinsOwned />
+                <CoinsOwned coins={coins} />
             </main>
         </div>
     );

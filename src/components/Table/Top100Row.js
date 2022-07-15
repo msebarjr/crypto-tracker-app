@@ -18,7 +18,6 @@ function Top100Row({ coin }) {
 
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-            console.log("Current data: ", doc.data().coinsWatching);
             setFavoriteCoins(doc.data().coinsWatching);
             updateUser(doc.data());
         });

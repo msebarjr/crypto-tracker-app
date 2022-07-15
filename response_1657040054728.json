@@ -1,7 +1,10 @@
 //  coinsOwn = [
 //   {
+//     id
 //     name
 //     purchasePrice
+//     quantity
+//     date purchased
 //   }
 // ]
 //  1 coin = price of coin to buy
