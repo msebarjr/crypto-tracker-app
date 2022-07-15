@@ -1,6 +1,7 @@
 import CoinsOwned from "../components/Coins/CoinsOwned";
 import CoinsWatching from "../components/Coins/CoinsWatching";
 import { useUser } from "../contexts/UserContext";
+
 import styles from "../styles/Portfolio.module.css";
 
 function Portfolio({ coins }) {

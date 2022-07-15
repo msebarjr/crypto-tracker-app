@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useUser } from "../../contexts/UserContext";
 import { db } from "../../firebase";
+import { toast } from "react-toastify";
 
 import CoinWatchingRow from "./CoinWatchingRow";
 
@@ -12,11 +13,10 @@ function CoinsWatching({ coins }) {
     const [favoriteCoins, setFavoriteCoins] = useState([]);
 
     const { currentUser } = useAuth();
-    const { updateUser } = useUser();
+    const { updateUser, updateDocument } = useUser();
 
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-            console.log("Current data: ", doc.data().coinsWatching);
             setFavoriteCoins(doc.data().coinsWatching);
             updateUser(doc.data());
         });
@@ -27,6 +27,12 @@ function CoinsWatching({ coins }) {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser.uid]);
+
+    function removeCoinFromFavorites(coin) {
+        const coins = favoriteCoins.filter((favCoin) => favCoin !== coin.id);
+        toast.error(`${coin.name} removed as Favorite`);
+        updateDocument(currentUser.uid, { coinsWatching: coins });
+    }
 
     return (
         <div className={styles.coins_watching}>
@@ -40,6 +46,10 @@ function CoinsWatching({ coins }) {
                         <CoinWatchingRow
                             key={favCoin}
                             coinWatching={coinWatching}
+                            onClick={removeCoinFromFavorites.bind(
+                                this,
+                                coinWatching
+                            )}
                         />
                     );
                 })

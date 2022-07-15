@@ -3,18 +3,22 @@ import { Link } from "react-router-dom";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 import { toast } from "react-toastify";
-
-import styles from "../../styles/Top100Table.module.css";
-import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+
 import { useAuth } from "../../contexts/AuthContext";
 import { useUser } from "../../contexts/UserContext";
 
+import styles from "../../styles/Top100Table.module.css";
+
 function Top100Row({ coin }) {
+    const [isWatching, setIsWacthing] = useState(false);
     const [favoriteCoins, setFavoriteCoins] = useState([]);
 
     const { currentUser } = useAuth();
     const { updateDocument, updateUser } = useUser();
+
+    const priceColor = coin.price_change_percentage_24h > 0 ? "green" : "red";
 
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
@@ -29,6 +33,10 @@ function Top100Row({ coin }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser.uid]);
 
+    useEffect(() => {
+        setIsWacthing(favoriteCoins.includes(coin.id));
+    }, [favoriteCoins, coin.id]);
+
     function addCoinToFavorites() {
         const coins = [...favoriteCoins, coin.id];
         toast.info(`${coin.name} added to Favorites`);
@@ -41,24 +49,18 @@ function Top100Row({ coin }) {
         updateDocument(currentUser.uid, { coinsWatching: coins });
     }
 
-    const priceColor = coin.price_change_percentage_24h > 0 ? "green" : "red";
-
     return (
         <tr>
             <td className={styles.center}>
-                {favoriteCoins && favoriteCoins.includes(coin.id) ? (
+                {isWatching ? (
                     <AiFillStar
-                        className={`${styles.fav} ${styles.icon}`}
+                        className={styles.fav}
                         onClick={removeCoinFromFavorites}
                     />
                 ) : (
-                    <AiOutlineStar
-                        className={styles.icon}
-                        onClick={addCoinToFavorites}
-                    />
+                    <AiOutlineStar onClick={addCoinToFavorites} />
                 )}
             </td>
-
             <td>
                 <Link
                     to={`/coin/${coin.id}`}

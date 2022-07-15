@@ -9,7 +9,7 @@ import Button from "../UI/Button";
 
 import styles from "../../styles/CoinWatchingRow.module.css";
 
-function CoinWatchingRow({ coinWatching }) {
+function CoinWatchingRow({ coinWatching, onClick }) {
     const pricePositive = coinWatching.price_change_percentage_24h > 0;
     const pricingColor = pricePositive ? "rgb(17, 233, 17)" : "red";
 
@@ -44,7 +44,9 @@ function CoinWatchingRow({ coinWatching }) {
             </div>
             <div className={styles.coin_actions}>
                 <Button style={styles.coin_action_button}>Buy</Button>
-                <Button style={styles.coin_action_button}>Unwatch</Button>
+                <Button style={styles.coin_action_button} onClick={onClick}>
+                    Unwatch
+                </Button>
             </div>
         </div>
     );

@@ -9,16 +9,16 @@ import CoinPriceChange from "../components/Coins/CoinPriceChange";
 import styles from "../styles/CoinPage.module.css";
 
 function CoinPage() {
+    const [coin, setCoin] = useState({});
+
     const location = useLocation();
     const coinId = location.state;
 
-    const [coin, setCoin] = useState({});
     const url = `https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&sparkline=true`;
 
     useEffect(() => {
         axios.get(url).then((response) => {
             setCoin(response.data);
-            console.log(response.data);
         });
     }, [url]);
 

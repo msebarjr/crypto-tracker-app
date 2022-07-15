@@ -5,22 +5,57 @@ import {
     AiFillCaretDown,
     AiFillCaretUp,
 } from "react-icons/ai";
+import { toast } from "react-toastify";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase";
 
 import Button from "../UI/Button";
 import CoinSparkline from "./CoinSparkline";
 
 import styles from "../../styles/CoinStats.module.css";
+import { useAuth } from "../../contexts/AuthContext";
+import { useUser } from "../../contexts/UserContext";
 
 function CoinStats({ coin }) {
-    const [priceColor, setPriceColor] = useState("");
+    const [isWatching, setIsWacthing] = useState(false);
+    const [favoriteCoins, setFavoriteCoins] = useState([]);
+
+    const { currentUser } = useAuth();
+    const { updateDocument, updateUser } = useUser();
+
+    const priceColor =
+        coin.market_data?.price_change_percentage_24h > 0
+            ? "rgb(17, 233, 17)"
+            : "red";
 
     useEffect(() => {
-        setPriceColor(
-            coin.market_data?.price_change_percentage_24h > 0
-                ? "rgb(17, 233, 17)"
-                : "red"
-        );
-    }, [coin.market_data?.price_change_percentage_24h]);
+        const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+            setFavoriteCoins(doc.data().coinsWatching);
+            updateUser(doc.data());
+        });
+
+        return () => {
+            unsub();
+        };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentUser.uid]);
+
+    useEffect(() => {
+        setIsWacthing(favoriteCoins.includes(coin.id));
+    }, [favoriteCoins, coin.id]);
+
+    function addCoinToFavorites() {
+        const coins = [...favoriteCoins, coin.id];
+        toast.info(`${coin.name} added to Favorites`);
+        updateDocument(currentUser.uid, { coinsWatching: coins });
+    }
+
+    function removeCoinFromFavorites() {
+        const coins = favoriteCoins.filter((favCoin) => favCoin !== coin.id);
+        toast.error(`${coin.name} removed as Favorite`);
+        updateDocument(currentUser.uid, { coinsWatching: coins });
+    }
 
     return (
         <div className={styles.stats_container}>
@@ -61,7 +96,23 @@ function CoinStats({ coin }) {
             <div className={styles.actions}>
                 <Button style={styles.buy_button}>Buy</Button>
                 <Button style={styles.sell_button}>Sell</Button>
-                <AiOutlineStar size={24} />
+
+                {isWatching ? (
+                    <div className={styles.watching}>
+                        <AiFillStar
+                            size={24}
+                            className={[`${styles.fav} ${styles.star}`]}
+                            onClick={removeCoinFromFavorites}
+                        />
+                        <p>Watching</p>
+                    </div>
+                ) : (
+                    <AiOutlineStar
+                        className={styles.star}
+                        size={24}
+                        onClick={addCoinToFavorites}
+                    />
+                )}
             </div>
             <CoinSparkline data={coin.market_data?.sparkline_7d.price} />
         </div>
