@@ -37,12 +37,18 @@
   max-width: 150px;
 }
 
+.balance {
+  margin-top: 2rem;
+  align-self: start;
+  font-weight: 600;
+}
+
 .buy_actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 
 .buy_button, .cancel_button {

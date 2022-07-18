@@ -43,9 +43,12 @@ function BuyCoinForm({ closeBuyModal }) {
                     style={styles.buy_total}
                 />
             </div>
+            <p className={styles.balance}>Balance: $50,000</p>
             <div className={styles.buy_actions}>
                 <Button style={styles.buy_button}>Buy</Button>
-                <Button style={styles.cancel_button} onClick={closeBuyModal}>Cancel</Button>
+                <Button style={styles.cancel_button} onClick={closeBuyModal}>
+                    Cancel
+                </Button>
             </div>
         </form>
     );
