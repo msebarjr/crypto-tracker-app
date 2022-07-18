@@ -7,6 +7,7 @@ import styles from "../../styles/BuyCoinForm.module.css";
 
 function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
     const [unitsEntered, setUnitsEntereds] = useState(0);
+    const [error, setError] = useState(false);
 
     let total = unitsEntered * coinBuying.current_price;
 
