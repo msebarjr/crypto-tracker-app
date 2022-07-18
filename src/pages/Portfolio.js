@@ -1,19 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
 
+import BuyCoinModal from "../components/Modals/BuyCoinModal";
 import CoinsOwned from "../components/Coins/CoinsOwned";
 import CoinsWatching from "../components/Coins/CoinsWatching";
-import BuyCoinModal from "../components/Modals/BuyCoinModal";
 
+import { useAuth } from "../contexts/AuthContext";
 import { useUser } from "../contexts/UserContext";
 
 import styles from "../styles/Portfolio.module.css";
 
 function Portfolio({ coins }) {
+    const [favoriteCoins, setFavoriteCoins] = useState([]);
+    const [coinsOwn, setCoinsOwn] = useState([]);
     const [isBuyingOpen, setIsBuyingOpen] = useState(false);
     const [coinToBuy, setCoinToBuy] = useState({});
     // const [isSellingOpen, setIsSellingOpen] = useState(false);
 
-    const { user } = useUser();
+    const { currentUser } = useAuth();
+    const { updateUser, updateDocument, user } = useUser();
+
+    useEffect(() => {
+        const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
+            setFavoriteCoins(doc.data().coinsWatching);
+            setCoinsOwn(doc.data().coinsOwn);
+            updateUser(doc.data());
+        });
+
+        return () => {
+            unsub();
+        };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentUser.uid]);
 
     function openBuyModal(coinBuying) {
         setIsBuyingOpen(true);
@@ -22,6 +43,22 @@ function Portfolio({ coins }) {
 
     function closeBuyModal() {
         setIsBuyingOpen(false);
+    }
+
+    function buyCoinHandler(units, total) {
+        const coins = favoriteCoins.filter(
+            (favCoin) => favCoin !== coinToBuy.id
+        );
+        const newBalance = user.balance - total;
+        updateDocument(currentUser.uid, {
+            coinsWatching: coins,
+            balance: newBalance,
+        });
+        const updatedCoinsOwn = [];
+        toast.success(
+            `Congratulations! You just purchased ${units} units of ${coinToBuy.name}`
+        );
+        closeBuyModal();
     }
 
     return (
@@ -38,14 +75,18 @@ function Portfolio({ coins }) {
                 </div>
             </div>
             <main className={styles.main}>
-                <CoinsWatching coins={coins} openBuyModal={openBuyModal} />
+                <CoinsWatching
+                    coins={coins}
+                    favoriteCoins={favoriteCoins}
+                    openBuyModal={openBuyModal}
+                />
                 <CoinsOwned coins={coins} />
             </main>
             {isBuyingOpen && (
                 <BuyCoinModal
-                    coins={coins}
                     closeBuyModal={closeBuyModal}
                     coinBuying={coinToBuy}
+                    buyCoin={buyCoinHandler}
                 />
             )}
         </div>

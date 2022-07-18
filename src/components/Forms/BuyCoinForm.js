@@ -14,7 +14,7 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
         setUnitsEntereds(e.target.value);
     }
 
-    function buyCoinHandler() {
+    function buyCoinSubmit() {
         buyCoin(Number(unitsEntered), total.toFixed(2));
     }
 
@@ -60,7 +60,7 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
             </div>
 
             <div className={styles.buy_actions}>
-                <Button style={styles.buy_button} onClick={buyCoinHandler}>
+                <Button style={styles.buy_button} onClick={buyCoinSubmit}>
                     Buy
                 </Button>
                 <Button style={styles.cancel_button} onClick={closeBuyModal}>
