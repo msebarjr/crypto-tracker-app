@@ -1,0 +1,64 @@
+.buy_coin_form {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+
+.units_container {
+  width: 100%;
+  display: flex;
+  align-items: center;    
+  justify-content: flex-end;
+}
+
+.units_container span {
+  justify-self: flex-end;
+  align-self: flex-end;
+  margin: 0 1rem;
+  margin-bottom: .75rem;
+}
+
+.units_input {
+  max-width: 100px;
+}
+
+.total_container {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+}
+
+.total_container span {
+  margin-right: 1rem;
+}
+
+.market_value, .buy_total {
+  max-width: 150px;
+}
+
+.buy_actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 4rem;
+}
+
+.buy_button, .cancel_button {
+  width: 125px;
+  padding: .5em 1.5em;
+  border: none;
+}
+
+.buy_button:hover, .cancel_button:hover {
+  opacity: .75;
+}
+
+.buy_button {
+  background-color: rgb(43, 190, 43)
+}
+
+.cancel_button {
+  background-color: red;
+}

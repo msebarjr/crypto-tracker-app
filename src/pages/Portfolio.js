@@ -1,11 +1,26 @@
+import { useState } from "react";
+
 import CoinsOwned from "../components/Coins/CoinsOwned";
 import CoinsWatching from "../components/Coins/CoinsWatching";
+import BuyCoinModal from "../components/Modals/BuyCoinModal";
+
 import { useUser } from "../contexts/UserContext";
 
 import styles from "../styles/Portfolio.module.css";
 
 function Portfolio({ coins }) {
+    const [isBuyingOpen, setIsBuyingOpen] = useState(false);
+    // const [isSellingOpen, setIsSellingOpen] = useState(false);
+
     const { user } = useUser();
+
+    function openBuyModal() {
+        setIsBuyingOpen(true);
+    }
+
+    function closeBuyModal() {
+        setIsBuyingOpen(false);
+    }
 
     return (
         <div className={styles.portfolio_container}>
@@ -21,9 +36,10 @@ function Portfolio({ coins }) {
                 </div>
             </div>
             <main className={styles.main}>
-                <CoinsWatching coins={coins} />
+                <CoinsWatching coins={coins} openBuyModal={openBuyModal} />
                 <CoinsOwned coins={coins} />
             </main>
+            {isBuyingOpen && <BuyCoinModal coins={coins} closeBuyModal={closeBuyModal}/>}
         </div>
     );
 }

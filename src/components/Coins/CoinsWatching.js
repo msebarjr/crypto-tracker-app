@@ -9,7 +9,7 @@ import CoinWatchingRow from "./CoinWatchingRow";
 
 import styles from "../../styles/CoinsWatching.module.css";
 
-function CoinsWatching({ coins }) {
+function CoinsWatching({ coins, openBuyModal }) {
     const [favoriteCoins, setFavoriteCoins] = useState([]);
 
     const { currentUser } = useAuth();
@@ -46,6 +46,7 @@ function CoinsWatching({ coins }) {
                         <CoinWatchingRow
                             key={favCoin}
                             coinWatching={coinWatching}
+                            openBuyModal={openBuyModal}
                             onClick={removeCoinFromFavorites.bind(
                                 this,
                                 coinWatching

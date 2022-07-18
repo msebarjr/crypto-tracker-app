@@ -7,6 +7,7 @@ const marginStyle = {
 function Input({
     label,
     config,
+    disabled = false,
     onChange,
     isInvalid,
     invalidText,
@@ -22,6 +23,7 @@ function Input({
                 value={value}
                 className={isInvalid ? styles.invalid : undefined}
                 style={label && marginStyle}
+                disabled={disabled}
             />
             {isInvalid && <p className={styles.invalid_text}>{invalidText}</p>}
         </div>
