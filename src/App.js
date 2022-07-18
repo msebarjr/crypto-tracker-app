@@ -1,4 +1,6 @@
+import { useEffect, useState, useRef } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,6 +16,21 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./pages/Signup";
 
 function App() {
+    const [coins, setCoins] = useState([]);
+
+    const effectRan = useRef(false);
+
+    useEffect(() => {
+        if (effectRan.current === false) {
+            axios.get(process.env.REACT_APP_COIN_API_KEY).then((response) => {
+                setCoins(response.data);
+            });
+        }
+
+        return () => {
+            effectRan.current = true;
+        };
+    }, []);
     return (
         <>
             <AuthContextProvider>
@@ -32,7 +49,7 @@ function App() {
                                 path="/coins"
                                 element={
                                     <ProtectedRoute>
-                                        <Coins />
+                                        <Coins coins={coins} />
                                     </ProtectedRoute>
                                 }
                             />
@@ -40,7 +57,7 @@ function App() {
                                 path="/portfolio"
                                 element={
                                     <ProtectedRoute>
-                                        <Portfolio />
+                                        <Portfolio coins={coins} />
                                     </ProtectedRoute>
                                 }
                             />

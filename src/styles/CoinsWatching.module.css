@@ -1,0 +1,11 @@
+.coins_watching {
+  flex: 2;
+}
+
+.coins_watching h4 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+  font-weight: 500;
+}

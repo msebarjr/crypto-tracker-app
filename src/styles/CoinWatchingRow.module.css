@@ -1,0 +1,70 @@
+.watching_row {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--primary);
+  padding: 1rem 0;
+}
+
+.coin_info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+
+.image_wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.image_wrapper img {
+  width: 24px;
+}
+
+.image_wrapper .coin_name {
+  margin-left: 0.5rem;
+}
+
+.pricing_wrapper, .price_change {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pricing_wrapper {  
+  width: 45%;
+}
+
+.price_change {
+  justify-content: space-between;
+  width: 45%;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.coin_actions {
+  display: flex;
+  margin-top: 0.5rem;
+  gap: 10px;
+}
+
+.coin_action_button:first-child {
+  background-color: rgb(17, 233, 17)
+}
+
+.coin_action_button:last-child {
+  background-color: rgb(252, 212, 10)
+}
+
+.coin_action_button {
+  flex: 1;
+  border: none;
+  border-radius: 2px !important;
+  padding: .25em 0;
+}
+
+.coin_action_button:hover {
+  opacity: .75;
+}
+

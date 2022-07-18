@@ -77,6 +77,25 @@
   font-size: 24px;
 }
 
+.star {
+  cursor: pointer;
+}
+
+.fav {
+  color: var(--primary)
+}
+
+.watching {
+  display: flex;
+  align-items: center;
+}
+
+.watching p {
+  margin-left: 0.25rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
 @media screen and (max-width: 1130px) {
   .stats_container {
     width: 100%;

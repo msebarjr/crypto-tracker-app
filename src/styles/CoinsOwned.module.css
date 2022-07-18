@@ -1,6 +1,18 @@
-.top_100_card {
+.coins_owned {
+  flex: 6;
+}
+
+.coins_owned h4 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+.coins_owned_card {
   margin-top: 1rem;
   overflow: hidden;
+  margin-top: 2rem;
 }
 
 .no_coins {
