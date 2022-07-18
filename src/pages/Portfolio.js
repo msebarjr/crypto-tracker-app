@@ -10,12 +10,14 @@ import styles from "../styles/Portfolio.module.css";
 
 function Portfolio({ coins }) {
     const [isBuyingOpen, setIsBuyingOpen] = useState(false);
+    const [coinToBuy, setCoinToBuy] = useState({});
     // const [isSellingOpen, setIsSellingOpen] = useState(false);
 
     const { user } = useUser();
 
-    function openBuyModal() {
+    function openBuyModal(coinBuying) {
         setIsBuyingOpen(true);
+        setCoinToBuy(coinBuying);
     }
 
     function closeBuyModal() {
@@ -39,7 +41,13 @@ function Portfolio({ coins }) {
                 <CoinsWatching coins={coins} openBuyModal={openBuyModal} />
                 <CoinsOwned coins={coins} />
             </main>
-            {isBuyingOpen && <BuyCoinModal coins={coins} closeBuyModal={closeBuyModal}/>}
+            {isBuyingOpen && (
+                <BuyCoinModal
+                    coins={coins}
+                    closeBuyModal={closeBuyModal}
+                    coinBuying={coinToBuy}
+                />
+            )}
         </div>
     );
 }
