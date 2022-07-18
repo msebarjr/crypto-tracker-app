@@ -3,19 +3,18 @@ import CoinsOwnedTable from "../Table/CoinsOwnedTable";
 
 import styles from "../../styles/CoinsOwned.module.css";
 
-function CoinsOwned({ coins }) {
-    const coinsOwned = [coins[0], coins[1]];
+function CoinsOwned({ coinsOwn, coins }) {  
 
     return (
         <div className={styles.coins_owned}>
             <h4>Coins Owned</h4>
             <Card style={styles.coins_owned_card}>
-                {coinsOwned.length === 0 ? (
+                {coinsOwn.length === 0 ? (
                     <div className={styles.no_coins}>
                         <p>You do not own any coins!</p>
                     </div>
                 ) : (
-                    <CoinsOwnedTable coinsOwned={coinsOwned} />
+                    <CoinsOwnedTable coinsOwn={coinsOwn} coins={coins} />
                 )}
             </Card>
         </div>

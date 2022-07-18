@@ -4,10 +4,13 @@ import Button from "../UI/Button";
 import Input from "../UI/Input";
 
 import styles from "../../styles/BuyCoinForm.module.css";
+import { useUser } from "../../contexts/UserContext";
 
 function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
     const [unitsEntered, setUnitsEntereds] = useState(0);
     const [error, setError] = useState(false);
+
+    const { user } = useUser();
 
     let total = unitsEntered * coinBuying.current_price;
 
@@ -16,6 +19,12 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
     }
 
     function buyCoinSubmit() {
+        if (user.balance - total < 0) {
+            setError(true);
+            return;
+        }
+
+        setError(false);
         buyCoin(Number(unitsEntered), total.toFixed(2));
     }
 
@@ -28,6 +37,7 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
                     config={{ type: "number", value: 1, min: 0.25, step: 0.25 }}
                     value={unitsEntered}
                     onChange={unitsHandler}
+                    isInvalid={error}
                 />
                 <span>X</span>
                 <Input
@@ -59,7 +69,11 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
                     style={styles.buy_total}
                 />
             </div>
-
+            {error && (
+                <p className={styles.purchase_error}>
+                    You do not have enough funds!
+                </p>
+            )}
             <div className={styles.buy_actions}>
                 <Button style={styles.buy_button} onClick={buyCoinSubmit}>
                     Buy

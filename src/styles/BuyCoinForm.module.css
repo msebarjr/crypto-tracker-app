@@ -38,6 +38,11 @@
   max-width: 150px;
 }
 
+.purchase_error {
+  color: red;
+  margin-top: 2rem;
+}
+
 .buy_actions {
   display: flex;
   flex-direction: row-reverse;

@@ -11,6 +11,23 @@
 // selling price - initial purchase price = gain or loss
 // gain or loss / initial purchase price * 100 = % change in investment
  
+
+{
+  own: [{
+    id: bitcoin,
+    purchases: [
+      {
+        price:
+        date,
+        units
+      },
+    ]
+  }, {}, {}]
+
+
+}
+
+
 {
   "id": "bitcoin",
   "symbol": "btc",

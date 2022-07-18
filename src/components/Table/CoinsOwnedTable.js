@@ -2,7 +2,7 @@ import CoinOwnedRow from "./CoinOwnedRow";
 
 import "../../styles/CoinsOwnedTable.module.css";
 
-function CoinsOwnedTable({ coinsOwned }) {
+function CoinsOwnedTable({ coinsOwn, coins }) {
     return (
         <table>
             <thead>
@@ -16,9 +16,16 @@ function CoinsOwnedTable({ coinsOwned }) {
                 </tr>
             </thead>
             <tbody>
-                {coinsOwned.map((coin) => (
-                    <CoinOwnedRow key={coin.id} coin={coin} />
-                ))}
+                {coinsOwn.map((coin) => {
+                    const coinsOwnData = coins.find((c) => c.id === coin.id);
+
+                    return (
+                        <CoinOwnedRow
+                            key={coinsOwnData.id}
+                            coin={coinsOwnData}
+                        />
+                    );
+                })}
             </tbody>
         </table>
     );

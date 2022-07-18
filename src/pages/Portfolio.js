@@ -53,12 +53,17 @@ function Portfolio({ coins }) {
         const updatedCoinsOwn = [
             ...coinsOwn,
             {
-                units,
                 id: coinToBuy.id,
-                price_bought_at: coinToBuy.current_price,
-                purchase_date: new Date(),
+                purchases: [
+                    {
+                        units,
+                        price_bought_at: coinToBuy.current_price,
+                        purchase_date: new Date(),
+                    },
+                ],
             },
         ];
+
         updateDocument(currentUser.uid, {
             coinsWatching: coins,
             balance: Number(newBalance.toFixed(2)),
@@ -89,7 +94,7 @@ function Portfolio({ coins }) {
                     favoriteCoins={favoriteCoins}
                     openBuyModal={openBuyModal}
                 />
-                <CoinsOwned coins={coins} />
+                <CoinsOwned coinsOwn={coinsOwn} coins={coins} />
             </main>
             {isBuyingOpen && (
                 <BuyCoinModal
