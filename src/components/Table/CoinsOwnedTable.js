@@ -21,7 +21,7 @@ function CoinsOwnedTable({ coinsOwn, coins }) {
                 </tr>
             </thead>
             <tbody>
-                {/* {coinsOwn.map((coin) => {
+                {coinsOwn.map((coin) => {
                     const coinsOwnData = coins.find((c) => c.id === coin.id);
 
                     if (uniquePurchases.includes(coin.id)) return undefined;
@@ -36,9 +36,7 @@ function CoinsOwnedTable({ coinsOwn, coins }) {
                             />
                         );
                     }
-                  
-                })} */}
-                <p>Hello</p>
+                })}
             </tbody>
         </table>
     );

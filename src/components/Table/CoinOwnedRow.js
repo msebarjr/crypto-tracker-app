@@ -10,24 +10,9 @@ import { useUser } from "../../contexts/UserContext";
 import styles from "../../styles/CoinOwnedRow.module.css";
 
 function CoinOwnedRow({ coin, currentCoin }) {
-    const [units, setUnits] = useState(0);
+    // const [units, setUnits] = useState(0);
     const pricePositive = coin.price_change_percentage_24h > 0;
     const pricingColor = pricePositive ? "rgb(44, 165, 44)" : "red";
-
-    const effectRan = useRef(false);
-    const { user } = useUser();
-
-    useEffect(() => {
-        if (effectRan.current === false)
-            user.coinsOwn.forEach((coin) => {
-                if (coin.id === currentCoin.id)
-                    setUnits((prevState) => prevState + currentCoin.units);
-            });
-
-        return () => {
-            effectRan.current = true;
-        };
-    }, [currentCoin.units, currentCoin.id, user.coinsOwn]);
 
     function sellCoinHandler() {
         console.log(coin);
@@ -79,7 +64,7 @@ function CoinOwnedRow({ coin, currentCoin }) {
                     </div>
                 </Link>
             </td>
-            <td>{units}</td>
+            <td>{currentCoin.total_units_purchased}</td>
             <td>
                 <Link
                     to={`/coin/${coin.id}`}
