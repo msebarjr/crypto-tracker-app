@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
 
 import BuyCoinModal from "../components/Modals/BuyCoinModal";
@@ -15,22 +15,35 @@ import styles from "../styles/Portfolio.module.css";
 function Portfolio({ coins }) {
     const [favoriteCoins, setFavoriteCoins] = useState([]);
     const [coinsOwn, setCoinsOwn] = useState([]);
+    // const [coinPurchases, setCoinPurchases] = useState([]);
     const [isBuyingOpen, setIsBuyingOpen] = useState(false);
     const [coinToBuy, setCoinToBuy] = useState({});
     // const [isSellingOpen, setIsSellingOpen] = useState(false);
 
     const { currentUser } = useAuth();
-    const { updateUser, updateDocument, user } = useUser();
+    const { updateUser, updateDocument, user, updateCoinPurchases } = useUser();
 
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
             setFavoriteCoins(doc.data().coinsWatching);
-            setCoinsOwn(doc.data().coinsOwn);
+            // setCoinsOwn(doc.data().coinsOwn);
             updateUser(doc.data());
+        });
+
+        const q = query(
+            collection(db, `users/${currentUser.uid}`, "coinsPurchased")
+        );
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const purchases = [];
+            querySnapshot.forEach((doc) => {
+                purchases.push(doc.data());
+            });
+            setCoinsOwn(purchases);
         });
 
         return () => {
             unsub();
+            unsubscribe();
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,29 +59,39 @@ function Portfolio({ coins }) {
     }
 
     function buyCoinHandler(units, total) {
-        const coins = favoriteCoins.filter(
-            (favCoin) => favCoin !== coinToBuy.id
-        );
         const newBalance = user.balance - total;
-        const updatedCoinsOwn = [
-            ...coinsOwn,
-            {
-                id: coinToBuy.id,
-                purchases: [
-                    {
-                        units,
-                        price_bought_at: coinToBuy.current_price,
-                        purchase_date: new Date(),
-                    },
-                ],
-            },
-        ];
+        let newTotalUnits = 0;
+        let coinDupData;
+        let previousPurchases = [];
+
+        const coinDuplicate = coinsOwn.filter(
+            (coin) => coin.id === coinToBuy.id
+        );
+
+        if (coinDuplicate.length > 0) {
+            coinDupData = coinDuplicate.pop();
+            newTotalUnits = coinDupData.total_units_purchased + units;
+            previousPurchases = coinDupData.purchases;
+        } else newTotalUnits = units;
+
+        updateCoinPurchases(currentUser.uid, coinToBuy, {
+            id: coinToBuy.id,
+            total_units_purchased: newTotalUnits,
+            name: coinToBuy.name,
+            purchases: [
+                ...previousPurchases,
+                {
+                    units: units,
+                    purchase_price: coinToBuy.current_price,
+                    purchase_date: new Date(),
+                },
+            ],
+        });
 
         updateDocument(currentUser.uid, {
-            coinsWatching: coins,
             balance: Number(newBalance.toFixed(2)),
-            coinsOwn: updatedCoinsOwn,
         });
+
         toast.success(
             `Congratulations! You just purchased ${units} units of ${coinToBuy.name}`
         );
@@ -94,7 +117,7 @@ function Portfolio({ coins }) {
                     favoriteCoins={favoriteCoins}
                     openBuyModal={openBuyModal}
                 />
-                <CoinsOwned coinsOwn={coinsOwn} coins={coins} />
+                <CoinsOwned coinsOwned={coinsOwn} coins={coins} />
             </main>
             {isBuyingOpen && (
                 <BuyCoinModal

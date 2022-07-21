@@ -3,12 +3,14 @@ import { useState } from "react";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 
-import styles from "../../styles/BuyCoinForm.module.css";
 import { useUser } from "../../contexts/UserContext";
+
+import styles from "../../styles/BuyCoinForm.module.css";
 
 function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
     const [unitsEntered, setUnitsEntereds] = useState(0);
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const { user } = useUser();
 
@@ -21,6 +23,13 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
     function buyCoinSubmit() {
         if (user.balance - total < 0) {
             setError(true);
+            setErrorMessage("You do not have enough funds!");
+            return;
+        }
+
+        if (unitsEntered <= 0) {
+            setError(true);
+            setErrorMessage("Must enter a valid unit!");
             return;
         }
 
@@ -69,11 +78,7 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
                     style={styles.buy_total}
                 />
             </div>
-            {error && (
-                <p className={styles.purchase_error}>
-                    You do not have enough funds!
-                </p>
-            )}
+            {error && <p className={styles.purchase_error}>{errorMessage}</p>}
             <div className={styles.buy_actions}>
                 <Button style={styles.buy_button} onClick={buyCoinSubmit}>
                     Buy

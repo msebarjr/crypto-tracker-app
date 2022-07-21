@@ -50,7 +50,22 @@ export function UserContextProvider({ children }) {
         }
     }
 
-    const value = { getUser, addDocument, user, updateDocument, updateUser };
+    async function updateCoinPurchases(userUID, coinToBuy, data) {
+        await setDoc(
+            doc(db, `users/${userUID}/coinsPurchased`, coinToBuy.id),
+            data,
+            { merge: true }
+        );
+    }
+
+    const value = {
+        user,
+        getUser,
+        addDocument,
+        updateDocument,
+        updateUser,
+        updateCoinPurchases,
+    };
 
     return (
         <UserContext.Provider value={value}>{children}</UserContext.Provider>

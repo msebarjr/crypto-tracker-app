@@ -1,17 +1,36 @@
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
 import Button from "../UI/Button";
 
+import { useUser } from "../../contexts/UserContext";
+
 import styles from "../../styles/CoinOwnedRow.module.css";
 
-function CoinOwnedRow({ coin }) {
+function CoinOwnedRow({ coin, currentCoin }) {
+    const [units, setUnits] = useState(0);
     const pricePositive = coin.price_change_percentage_24h > 0;
     const pricingColor = pricePositive ? "rgb(44, 165, 44)" : "red";
 
+    const effectRan = useRef(false);
+    const { user } = useUser();
+
+    useEffect(() => {
+        if (effectRan.current === false)
+            user.coinsOwn.forEach((coin) => {
+                if (coin.id === currentCoin.id)
+                    setUnits((prevState) => prevState + currentCoin.units);
+            });
+
+        return () => {
+            effectRan.current = true;
+        };
+    }, [currentCoin.units, currentCoin.id, user.coinsOwn]);
+
     function sellCoinHandler() {
-        console.log("Sold!!");
+        console.log(coin);
     }
 
     return (
@@ -60,7 +79,7 @@ function CoinOwnedRow({ coin }) {
                     </div>
                 </Link>
             </td>
-            <td>4.5</td>
+            <td>{units}</td>
             <td>
                 <Link
                     to={`/coin/${coin.id}`}
