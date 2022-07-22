@@ -26,7 +26,6 @@ function Portfolio({ coins }) {
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
             setFavoriteCoins(doc.data().coinsWatching);
-            // setCoinsOwn(doc.data().coinsOwn);
             updateUser(doc.data());
         });
 
