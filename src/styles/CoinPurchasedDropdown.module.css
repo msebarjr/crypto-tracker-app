@@ -1,0 +1,15 @@
+.dropdown{
+  color: var(--secondary);
+  background-color: rgb(242, 184, 161) !important;
+  text-align: center;
+}
+
+.data_title {
+  font-weight: bold;  
+}
+
+.sell_button {
+  background-color: transparent;
+  color: red;
+  border: none;
+}

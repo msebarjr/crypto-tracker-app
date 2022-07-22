@@ -1,13 +1,10 @@
 import CoinOwnedRow from "./CoinOwnedRow";
 
 import "../../styles/CoinsOwnedTable.module.css";
-import { useEffect } from "react";
 
 function CoinsOwnedTable({ coinsOwn, coins }) {
     let uniquePurchases = [];
-    // useEffect(() => {
-    //     console.log("OWN: ", coinsOwn);
-    // }, [coinsOwn]);
+
     return (
         <table>
             <thead>

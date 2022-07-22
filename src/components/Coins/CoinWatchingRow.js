@@ -1,6 +1,4 @@
-import {
-    AiOutlineStar,
-    AiFillStar,
+import {    
     AiFillCaretDown,
     AiFillCaretUp,
 } from "react-icons/ai";
