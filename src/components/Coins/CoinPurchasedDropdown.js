@@ -1,12 +1,20 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import DropdownHeader from "../Table/DropdownHeader";
 import DropdownRow from "../Table/DropdownRow";
 import SellCoinModal from "../Modals/SellCoinModal";
 
+import { useAuth } from "../../contexts/AuthContext";
+import { useUser } from "../../contexts/UserContext";
+
 function CoinPurchasedDropdown({ currentCoin, coinData }) {
     const [openSellModal, setOpenSellModal] = useState(false);
     const [purchaseToSell, setPurchaseToSell] = useState({});
+
+    const { currentUser } = useAuth();
+    const { updateDocument, user, updateCoinSelling, deleteDocument } =
+        useUser();
 
     function closeSellModalHandler() {
         setOpenSellModal(false);
@@ -15,15 +23,51 @@ function CoinPurchasedDropdown({ currentCoin, coinData }) {
     function openSellModalHandler(purchaseSelling) {
         setOpenSellModal(true);
         setPurchaseToSell(purchaseSelling);
-        console.log("Purchase Selling: ", purchaseSelling);
-        console.log("Current Coin: ", currentCoin);
-        console.log("Coin Data: ", coinData);
-        console.log(typeof purchaseSelling.units);
     }
 
-    function sellCoinHandler(unitsToSell, total) {
-        console.log("Units to Sell: ", unitsToSell);
-        console.log("Total: ", total);
+    function sellCoinHandler(unitsToSell, total, purchaseId) {
+        const newBalance = user.balance + Number(total);
+        const newCoinTotalUnits =
+            currentCoin.total_units_purchased - unitsToSell;
+        const newPurchaseTotalUnits = purchaseToSell.units - unitsToSell;
+        const otherPurchases = currentCoin.purchases.filter(
+            (purchase) => purchase.id !== purchaseId
+        );
+        let updatedPurchases = [];
+        let purchase = {};
+
+        console.log(purchaseToSell);
+
+        if (newPurchaseTotalUnits === 0) {
+            updatedPurchases = otherPurchases;
+        } else {
+            purchase = {
+                id: purchaseId,
+                units: newPurchaseTotalUnits,
+                purchase_price: purchaseToSell.purchase_price,
+                purchase_date: purchaseToSell.purchase_date,
+            };
+            updatedPurchases = [...otherPurchases, purchase];
+        }
+
+        if (newCoinTotalUnits === 0)
+            deleteDocument(currentUser.uid, currentCoin);
+        else
+            updateCoinSelling(currentUser.uid, currentCoin, {
+                id: currentCoin.id,
+                total_units_purchased: newCoinTotalUnits,
+                name: currentCoin.name,
+                purchases: updatedPurchases,
+            });
+
+        updateDocument(currentUser.uid, {
+            balance: Number(newBalance.toFixed(2)),
+        });
+
+        toast.success(
+            `Congratulations! You just sold ${unitsToSell} unit(s) of ${currentCoin.name}`
+        );
+
         setOpenSellModal(false);
     }
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { collection, getDoc, setDoc, doc } from "firebase/firestore";
+import { collection, getDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const UserContext = createContext();
@@ -58,6 +58,19 @@ export function UserContextProvider({ children }) {
         );
     }
 
+    async function updateCoinSelling(userUID, currentCoin, data) {
+        await setDoc(
+            doc(db, `users/${userUID}/coinsPurchased`, currentCoin.id),
+            data
+        );
+    }
+
+    async function deleteDocument(userUID, currentCoin) {
+        await deleteDoc(
+            doc(db, `users/${userUID}/coinsPurchased`, currentCoin.id)
+        );
+    }
+
     const value = {
         user,
         getUser,
@@ -65,6 +78,8 @@ export function UserContextProvider({ children }) {
         updateDocument,
         updateUser,
         updateCoinPurchases,
+        updateCoinSelling,
+        deleteDocument,
     };
 
     return (

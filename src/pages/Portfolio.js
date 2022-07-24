@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
+import uuid from "react-uuid";
 
 import BuyCoinModal from "../components/Modals/BuyCoinModal";
 import CoinsOwned from "../components/Coins/CoinsOwned";
@@ -14,11 +15,10 @@ import styles from "../styles/Portfolio.module.css";
 
 function Portfolio({ coins }) {
     const [favoriteCoins, setFavoriteCoins] = useState([]);
-    const [coinsOwn, setCoinsOwn] = useState([]);
-    // const [coinPurchases, setCoinPurchases] = useState([]);
+    const [coinsOwn, setCoinsOwn] = useState([]); 
     const [isBuyingOpen, setIsBuyingOpen] = useState(false);
     const [coinToBuy, setCoinToBuy] = useState({});
-    // const [isSellingOpen, setIsSellingOpen] = useState(false);
+    
 
     const { currentUser } = useAuth();
     const { updateUser, updateDocument, user, updateCoinPurchases } = useUser();
@@ -80,6 +80,7 @@ function Portfolio({ coins }) {
             purchases: [
                 ...previousPurchases,
                 {
+                    id: uuid(),
                     units: units,
                     purchase_price: coinToBuy.current_price,
                     purchase_date: new Date(),
@@ -94,7 +95,7 @@ function Portfolio({ coins }) {
         toast.success(
             `Congratulations! You just purchased ${units} units of ${coinToBuy.name}`
         );
-        
+
         setIsBuyingOpen(false);
     }
 

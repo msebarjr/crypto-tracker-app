@@ -6,10 +6,10 @@ import Input from "../UI/Input";
 import styles from "../../styles/BuyCoinForm.module.css";
 
 function SellCoinForm({
-    totalUnitsOwned,
     coinSellingData,
     closeSellModal,
     sellCoin,
+    currentPurchaseData,
 }) {
     const [unitsEntered, setUnitsEntereds] = useState(0);
     const [error, setError] = useState(false);
@@ -27,7 +27,11 @@ function SellCoinForm({
         }
 
         setError(false);
-        sellCoin(Number(unitsEntered), total.toFixed(2));
+        sellCoin(
+            Number(unitsEntered),
+            total.toFixed(2),
+            currentPurchaseData.id
+        );
     }
 
     return (
@@ -39,7 +43,7 @@ function SellCoinForm({
                     config={{
                         type: "number",
                         min: 0.25,
-                        max: totalUnitsOwned,
+                        max: currentPurchaseData.units,
                         step: 0.25,
                     }}
                     value={unitsEntered}
