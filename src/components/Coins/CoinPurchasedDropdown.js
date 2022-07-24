@@ -21,7 +21,11 @@ function CoinPurchasedDropdown({ currentCoin, coinData }) {
         console.log(typeof purchaseSelling.units);
     }
 
-    function sellCoinHandler() {}
+    function sellCoinHandler(unitsToSell, total) {
+        console.log("Units to Sell: ", unitsToSell);
+        console.log("Total: ", total);
+        setOpenSellModal(false);
+    }
 
     return (
         <>

@@ -5,8 +5,14 @@ import Input from "../UI/Input";
 
 import styles from "../../styles/BuyCoinForm.module.css";
 
-function SellCoinForm({ totalUnitsOwned, coinSellingData }) {
+function SellCoinForm({
+    totalUnitsOwned,
+    coinSellingData,
+    closeSellModal,
+    sellCoin,
+}) {
     const [unitsEntered, setUnitsEntereds] = useState(0);
+    const [error, setError] = useState(false);
 
     const total = unitsEntered * coinSellingData.current_price;
 
@@ -14,11 +20,21 @@ function SellCoinForm({ totalUnitsOwned, coinSellingData }) {
         setUnitsEntereds(e.target.value);
     }
 
+    function sellPurchaseSubmit() {
+        if (unitsEntered <= 0) {
+            setError(true);
+            return;
+        }
+
+        setError(false);
+        sellCoin(Number(unitsEntered), total.toFixed(2));
+    }
+
     return (
         <div className={styles.buy_coin_form}>
             <div className={styles.units_container}>
                 <Input
-                    label="# Units"
+                    label="# Units to Sell"
                     style={styles.units_input}
                     config={{
                         type: "number",
@@ -59,10 +75,18 @@ function SellCoinForm({ totalUnitsOwned, coinSellingData }) {
                     style={styles.buy_total}
                 />
             </div>
-
-            <div className={styles.buy_actions}>
-                <Button style={styles.sell_button}>Sell</Button>
-                <Button style={styles.cancel_button}>Cancel</Button>
+            {error && (
+                <p className={styles.purchase_error}>
+                    Units must be greater than 0!
+                </p>
+            )}
+            <div className={styles.actions}>
+                <Button style={styles.sell_button} onClick={sellPurchaseSubmit}>
+                    Sell
+                </Button>
+                <Button style={styles.cancel_button} onClick={closeSellModal}>
+                    Cancel
+                </Button>
             </div>
         </div>
     );

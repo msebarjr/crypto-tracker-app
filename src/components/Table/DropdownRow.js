@@ -41,7 +41,7 @@ function DropdownRow({ coinData, purchaseInfo, openSellModal }) {
     return (
         <tr className={styles.dropdown}>
             <td>
-                <p>{purchaseInfo.purchase_date.toDate().toLocaleString()}</p>
+                <p>{purchaseInfo.purchase_date.toDate().toDateString()}</p>
             </td>
             <td>
                 <p>{purchaseInfo.units}</p>

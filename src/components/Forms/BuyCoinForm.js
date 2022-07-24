@@ -79,7 +79,7 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
                 />
             </div>
             {error && <p className={styles.purchase_error}>{errorMessage}</p>}
-            <div className={styles.buy_actions}>
+            <div className={styles.actions}>
                 <Button style={styles.buy_button} onClick={buyCoinSubmit}>
                     Buy
                 </Button>

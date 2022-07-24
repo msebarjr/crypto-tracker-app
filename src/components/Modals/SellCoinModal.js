@@ -10,6 +10,7 @@ function SellCoinModal({
     coinSellingData,
     currentPurchaseData,
     purchaseToSell,
+    sellCoin
 }) {
     return (
         <Modal onClose={closeSellModal}>
@@ -22,17 +23,14 @@ function SellCoinModal({
             </header>
             <main className={styles.modal_main}>
                 <p className={styles.balance}>
-                    Units Own: {purchaseToSell.units}
+                    Units Owned: {purchaseToSell.units}
                 </p>
                 <SellCoinForm
                     coinSellingData={coinSellingData}
                     totalUnitsOwned={purchaseToSell.units}
+                    closeSellModal={closeSellModal}
+                    sellCoin={sellCoin}
                 />
-                {/* <BuyCoinForm
-            closeBuyModal={closeBuyModal}
-            buyCoin={buyCoin}
-            coinBuying={coinBuying}
-        /> */}
             </main>
         </Modal>
     );

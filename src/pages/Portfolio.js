@@ -94,7 +94,8 @@ function Portfolio({ coins }) {
         toast.success(
             `Congratulations! You just purchased ${units} units of ${coinToBuy.name}`
         );
-        closeBuyModal();
+        
+        setIsBuyingOpen(false);
     }
 
     return (

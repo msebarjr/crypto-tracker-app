@@ -43,7 +43,7 @@
   margin-top: 2rem;
 }
 
-.buy_actions {
+.actions {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
