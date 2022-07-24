@@ -1,32 +1,15 @@
-import { doc, onSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
 import { useAuth } from "../../contexts/AuthContext";
 import { useUser } from "../../contexts/UserContext";
-import { db } from "../../firebase";
-import { toast } from "react-toastify";
 
 import CoinWatchingRow from "./CoinWatchingRow";
 
 import styles from "../../styles/CoinsWatching.module.css";
 
-function CoinsWatching({ coins, openBuyModal }) {
-    const [favoriteCoins, setFavoriteCoins] = useState([]);
-
+function CoinsWatching({ coins, openBuyModal, favoriteCoins }) {
     const { currentUser } = useAuth();
-    const { updateUser, updateDocument } = useUser();
-
-    useEffect(() => {
-        const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-            setFavoriteCoins(doc.data().coinsWatching);
-            updateUser(doc.data());
-        });
-
-        return () => {
-            unsub();
-        };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentUser.uid]);
+    const { updateDocument } = useUser();
 
     function removeCoinFromFavorites(coin) {
         const coins = favoriteCoins.filter((favCoin) => favCoin !== coin.id);

@@ -2,6 +2,7 @@
   display: flex; 
   flex-direction: column;
   align-items: center;
+  margin-top: 2rem;
 }
 
 .units_container {
@@ -37,27 +38,27 @@
   max-width: 150px;
 }
 
-.balance {
+.purchase_error {
+  color: red;
   margin-top: 2rem;
-  align-self: start;
-  font-weight: 600;
 }
 
-.buy_actions {
+.actions {
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
-.buy_button, .cancel_button {
+.buy_button, .cancel_button, .sell_button {
   width: 125px;
   padding: .5em 1.5em;
   border: none;
 }
 
-.buy_button:hover, .cancel_button:hover {
+.buy_button:hover, .cancel_button:hover, .sell_button:hover {
   opacity: .75;
 }
 
@@ -67,4 +68,10 @@
 
 .cancel_button {
   background-color: red;
+}
+
+.sell_button {
+  background-color: var(--primary);
+  color: var(--secondary);
+  letter-spacing: 2px;
 }

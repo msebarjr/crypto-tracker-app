@@ -1,6 +1,4 @@
-import {
-    AiOutlineStar,
-    AiFillStar,
+import {    
     AiFillCaretDown,
     AiFillCaretUp,
 } from "react-icons/ai";
@@ -12,6 +10,10 @@ import styles from "../../styles/CoinWatchingRow.module.css";
 function CoinWatchingRow({ coinWatching, onClick, openBuyModal }) {
     const pricePositive = coinWatching.price_change_percentage_24h > 0;
     const pricingColor = pricePositive ? "rgb(17, 233, 17)" : "red";
+
+    function buyCoinHandler() {
+        openBuyModal(coinWatching);
+    }
 
     return (
         <div className={styles.watching_row}>
@@ -45,7 +47,7 @@ function CoinWatchingRow({ coinWatching, onClick, openBuyModal }) {
             <div className={styles.coin_actions}>
                 <Button
                     style={styles.coin_action_button}
-                    onClick={openBuyModal}
+                    onClick={buyCoinHandler}
                 >
                     Buy
                 </Button>

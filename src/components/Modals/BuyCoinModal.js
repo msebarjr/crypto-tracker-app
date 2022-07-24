@@ -1,35 +1,33 @@
-import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 import BuyCoinForm from "../Forms/BuyCoinForm";
-import Input from "../UI/Input";
 import Modal from "./Modal";
 
-import styles from "../../styles/BuyCoinModal.module.css";
+import { useUser } from "../../contexts/UserContext";
 
-function BuyCoinModal({ closeBuyModal }) {
-    const [coinSearchInput, setCoinSearchInput] = useState("");
+import styles from "../../styles/CoinModal.module.css";
 
-    function coinSearchInputHandler(e) {
-        setCoinSearchInput(e.target.value);
-    }
+function BuyCoinModal({ closeBuyModal, coinBuying, buyCoin }) {
+    const { user } = useUser();
 
     return (
         <Modal onClose={closeBuyModal}>
             <header className={styles.header}>
-                <h4>Buy Coin</h4>
+                <div className={styles.coin_info}>
+                    <img src={coinBuying.image} alt={coinBuying.id} />
+                    <p>{coinBuying.name}</p>
+                </div>
                 <AiOutlineClose onClick={closeBuyModal} />
             </header>
             <main className={styles.modal_main}>
-                <div className={styles.search_input_container}>
-                    <Input
-                        config={{ type: "text", placeholder: "Search Coin.." }}
-                        onChange={coinSearchInputHandler}
-                        value={coinSearchInput}
-                        style={styles.search_input}
-                    />
-                </div>
-                <BuyCoinForm closeBuyModal={closeBuyModal} />
+                <p className={styles.balance}>
+                    Balance: ${user.balance.toLocaleString()}
+                </p>
+                <BuyCoinForm
+                    closeBuyModal={closeBuyModal}
+                    buyCoin={buyCoin}
+                    coinBuying={coinBuying}
+                />
             </main>
         </Modal>
     );

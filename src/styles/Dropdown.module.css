@@ -1,0 +1,22 @@
+.dropdown{
+  color: var(--secondary);
+  background-color: rgb(255, 211, 193) !important;
+}
+
+.data_title {
+  font-weight: bold;  
+}
+
+.sell_button {
+  background-color: transparent;
+  color: red;
+  border: none;
+}
+
+.profit_loss {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
