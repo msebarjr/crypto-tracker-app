@@ -10,7 +10,7 @@ function DropdownHeader() {
                 <p className={styles.data_title}>Units</p>
             </td>
             <td>
-                <p className={styles.data_title}>Price</p>
+                <p className={styles.data_title}>Paid</p>
             </td>
             <td>
                 <p className={styles.data_title}>Total</p>

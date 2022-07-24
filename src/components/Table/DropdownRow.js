@@ -5,10 +5,12 @@ import Button from "../UI/Button";
 
 import styles from "../../styles/Dropdown.module.css";
 
-function DropdownRow({ coinData, purchaseInfo }) {
+function DropdownRow({ coinData, purchaseInfo, openSellModal }) {
     const [isProfit, setIsProfit] = useState(false);
     const [profitLossPercentage, setProfitLossPercentage] = useState(0);
     const [color, setColor] = useState("orange");
+
+    const pricePaid = purchaseInfo.units * purchaseInfo.purchase_price;
 
     useEffect(() => {
         coinData.current_price - purchaseInfo.purchase_price > 0
@@ -32,7 +34,9 @@ function DropdownRow({ coinData, purchaseInfo }) {
         }
     }, [coinData.current_price, isProfit, purchaseInfo.purchase_price]);
 
-    const pricePaid = purchaseInfo.units * purchaseInfo.purchase_price;
+    function openSellModalHandler() {
+        openSellModal(purchaseInfo);
+    }
 
     return (
         <tr className={styles.dropdown}>
@@ -46,7 +50,6 @@ function DropdownRow({ coinData, purchaseInfo }) {
                 <p>
                     $
                     {purchaseInfo.purchase_price.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                     })}
                 </p>
@@ -55,7 +58,6 @@ function DropdownRow({ coinData, purchaseInfo }) {
                 <p>
                     $
                     {pricePaid.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                     })}
                 </p>
@@ -75,15 +77,15 @@ function DropdownRow({ coinData, purchaseInfo }) {
             </td>
 
             <td>
-                <Button style={styles.sell_button}>Sell</Button>
+                <Button
+                    style={styles.sell_button}
+                    onClick={openSellModalHandler}
+                >
+                    Sell
+                </Button>
             </td>
         </tr>
     );
 }
 
 export default DropdownRow;
-
-/**
- * 100 @ 1 share
- * 105
- */

@@ -1,40 +1,17 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 
-import { useUser } from "../../contexts/UserContext";
-
 import styles from "../../styles/BuyCoinForm.module.css";
 
-function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
+function SellCoinForm({ totalUnitsOwned, coinSellingData }) {
     const [unitsEntered, setUnitsEntereds] = useState(0);
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
 
-    const { user } = useUser();
-
-    let total = unitsEntered * coinBuying.current_price;
+    const total = unitsEntered * coinSellingData.current_price;
 
     function unitsHandler(e) {
         setUnitsEntereds(e.target.value);
-    }
-
-    function buyCoinSubmit() {
-        if (user.balance - total < 0) {
-            setError(true);
-            setErrorMessage("You do not have enough funds!");
-            return;
-        }
-
-        if (unitsEntered <= 0) {
-            setError(true);
-            setErrorMessage("Must enter a valid unit!");
-            return;
-        }
-
-        setError(false);
-        buyCoin(Number(unitsEntered), total.toFixed(2));
     }
 
     return (
@@ -43,17 +20,21 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
                 <Input
                     label="# Units"
                     style={styles.units_input}
-                    config={{ type: "number", min: 0.25, step: 0.25 }}
+                    config={{
+                        type: "number",
+                        min: 0.25,
+                        max: totalUnitsOwned,
+                        step: 0.25,
+                    }}
                     value={unitsEntered}
                     onChange={unitsHandler}
-                    isInvalid={error}
                 />
                 <span>X</span>
                 <Input
                     label="Market Value"
                     disabled={true}
                     config={{
-                        placeholder: `$${coinBuying.current_price.toLocaleString(
+                        placeholder: `$${coinSellingData.current_price.toLocaleString(
                             undefined,
                             {
                                 minimumFractionDigits: 2,
@@ -78,17 +59,20 @@ function BuyCoinForm({ closeBuyModal, coinBuying, buyCoin }) {
                     style={styles.buy_total}
                 />
             </div>
-            {error && <p className={styles.purchase_error}>{errorMessage}</p>}
+
             <div className={styles.buy_actions}>
-                <Button style={styles.buy_button} onClick={buyCoinSubmit}>
-                    Buy
-                </Button>
-                <Button style={styles.cancel_button} onClick={closeBuyModal}>
-                    Cancel
-                </Button>
+                <Button style={styles.sell_button}>Sell</Button>
+                <Button style={styles.cancel_button}>Cancel</Button>
             </div>
         </div>
     );
 }
 
-export default BuyCoinForm;
+export default SellCoinForm;
+
+/**
+ *  Units Own
+ *  Units to Sell
+ *  Current Price
+ *  Total Selling Price
+ */

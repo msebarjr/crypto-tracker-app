@@ -1,7 +1,6 @@
 .dropdown{
   color: var(--secondary);
   background-color: rgb(255, 211, 193) !important;
-  text-align: center;
 }
 
 .data_title {
@@ -17,7 +16,6 @@
 .profit_loss {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
 }
 

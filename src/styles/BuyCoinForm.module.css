@@ -52,13 +52,13 @@
   margin-top: 3rem;
 }
 
-.buy_button, .cancel_button {
+.buy_button, .cancel_button, .sell_button {
   width: 125px;
   padding: .5em 1.5em;
   border: none;
 }
 
-.buy_button:hover, .cancel_button:hover {
+.buy_button:hover, .cancel_button:hover, .sell_button:hover {
   opacity: .75;
 }
 
@@ -68,4 +68,10 @@
 
 .cancel_button {
   background-color: red;
+}
+
+.sell_button {
+  background-color: var(--primary);
+  color: var(--secondary);
+  letter-spacing: 2px;
 }
