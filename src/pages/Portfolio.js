@@ -12,13 +12,13 @@ import { useAuth } from "../contexts/AuthContext";
 import { useUser } from "../contexts/UserContext";
 
 import styles from "../styles/Portfolio.module.css";
+import PieChart from "../components/PieChart";
 
 function Portfolio({ coins }) {
     const [favoriteCoins, setFavoriteCoins] = useState([]);
-    const [coinsOwn, setCoinsOwn] = useState([]); 
+    const [coinsOwn, setCoinsOwn] = useState([]);
     const [isBuyingOpen, setIsBuyingOpen] = useState(false);
     const [coinToBuy, setCoinToBuy] = useState({});
-    
 
     const { currentUser } = useAuth();
     const { updateUser, updateDocument, user, updateCoinPurchases } = useUser();
@@ -119,6 +119,7 @@ function Portfolio({ coins }) {
                     openBuyModal={openBuyModal}
                 />
                 <CoinsOwned coinsOwned={coinsOwn} coins={coins} />
+                <PieChart />
             </main>
             {isBuyingOpen && (
                 <BuyCoinModal
