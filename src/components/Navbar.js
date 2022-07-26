@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RiCoinsLine } from "react-icons/ri";
 import { useNavigate, NavLink } from "react-router-dom";
+import { AiOutlineClose } from "react-icons/ai";
+import { FaBars } from "react-icons/fa";
 
 import Button from "./UI/Button";
 
 import styles from "../styles/Navbar.module.css";
 
-function Navbar() {
-    const { logout, currentUser } = useAuth();
-    const navigate = useNavigate();
+function Navbar({ mobile }) {
+    const [isMobile, setIsMobile] = useState(mobile);
+
     const activeLink = {
         color: "rgba(33, 33, 33, 1)",
         backgroundColor: "rgba(242, 169, 0, 1)",
@@ -18,8 +21,16 @@ function Navbar() {
         color: "rgba(242, 169, 0, 1)",
     };
 
+    const { logout, currentUser } = useAuth();
+    const navigate = useNavigate();
+
+    function closeMobileHandler() {
+        setIsMobile(false);
+    }
+
     async function handleLogout() {
         try {
+            setIsMobile(false);
             await logout();
             navigate("./");
         } catch (e) {
@@ -39,35 +50,49 @@ function Navbar() {
             </div>
             {currentUser && (
                 <>
-                    <div className={styles.links}>
+                    <ul
+                        className={
+                            isMobile
+                                ? [`${styles.nav_menu} ${styles.nav_active}`]
+                                : styles.nav_menu
+                        }
+                    >
                         <NavLink
                             exact="true"
                             to="/coins"
-                            className={styles.link}
+                            className={styles.nav_item}
                             style={({ isActive }) =>
                                 isActive ? activeLink : link
                             }
+                            onClick={closeMobileHandler}
                         >
-                            Coins
+                            <li>Coins</li>
                         </NavLink>
                         <NavLink
                             exact="true"
                             to="/portfolio"
-                            className={styles.link}
+                            className={styles.nav_item}
                             style={({ isActive }) =>
                                 isActive ? activeLink : link
                             }
+                            onClick={closeMobileHandler}
                         >
-                            Portfolio
+                            <li>Portfolio</li>
                         </NavLink>
-                    </div>
-                    <div className={styles.logout}>
-                        <Button
-                            onClick={handleLogout}
-                            style={styles.logout_button}
-                        >
-                            Logout
-                        </Button>
+                        <li>
+                            <Button
+                                onClick={handleLogout}
+                                style={styles.logout_button}
+                            >
+                                Logout
+                            </Button>
+                        </li>
+                    </ul>
+                    <div
+                        className={styles.nav_toggler}
+                        onClick={() => setIsMobile(!isMobile)}
+                    >
+                        {isMobile ? <AiOutlineClose /> : <FaBars />}
                     </div>
                 </>
             )}
