@@ -9,8 +9,9 @@ import Button from "./UI/Button";
 
 import styles from "../styles/Navbar.module.css";
 
-function Navbar({ mobile }) {
-    const [isMobile, setIsMobile] = useState(mobile);
+function Navbar() {
+    const [isMobile, setIsMobile] = useState(false);
+    const [toggleIcon, setToggleIcon] = useState(false);
 
     const activeLink = {
         color: "rgba(33, 33, 33, 1)",
@@ -26,6 +27,12 @@ function Navbar({ mobile }) {
 
     function closeMobileHandler() {
         setIsMobile(false);
+        setToggleIcon(false);
+    }
+
+    function togglerHandler() {
+        setIsMobile(!isMobile);
+        setToggleIcon(!toggleIcon);
     }
 
     async function handleLogout() {
@@ -89,10 +96,16 @@ function Navbar({ mobile }) {
                         </li>
                     </ul>
                     <div
-                        className={styles.nav_toggler}
-                        onClick={() => setIsMobile(!isMobile)}
+                        className={
+                            toggleIcon
+                                ? [`${styles.nav_toggler} ${styles.toggle}`]
+                                : styles.nav_toggler
+                        }
+                        onClick={togglerHandler}
                     >
-                        {isMobile ? <AiOutlineClose /> : <FaBars />}
+                        <div className={styles.line1}></div>
+                        <div className={styles.line2}></div>
+                        <div className={styles.line3}></div>
                     </div>
                 </>
             )}
