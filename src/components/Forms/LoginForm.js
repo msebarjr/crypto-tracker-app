@@ -25,8 +25,12 @@ function LoginForm({ onSubmit, credentialsIsInvalid }) {
         onSubmit(enteredEmail, enteredPassword);
     }
 
+    function demoLoginHandler(e) {
+        e.preventDefault();
+    }
+
     return (
-        <form onSubmit={loginHandler}>
+        <form>
             <Input
                 label="Email:"
                 config={{ type: "email", placeholder: "Enter your email" }}
@@ -57,9 +61,13 @@ function LoginForm({ onSubmit, credentialsIsInvalid }) {
                 Must be atleast 6 characters.
             </p>
 
-            <Button style={styles.login_button}>Login</Button>
+            <Button style={styles.login_button} onClick={loginHandler}>
+                Login
+            </Button>
+            <Button style={styles.demo_login_button} onClick={demoLoginHandler}>
+                Demo Login
+            </Button>
 
-            <Button style={styles.demo_login_button}>Demo Login</Button>
             <p className={styles.no_account}>
                 Don't have an account?{" "}
                 <Link to="/signup" className="link">
