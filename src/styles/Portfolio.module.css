@@ -1,5 +1,6 @@
 .portfolio_container {
   margin-top: 4rem;
+  padding-bottom: 4rem;
   color: white;
 }
 
@@ -34,7 +35,27 @@
 }
 
 .main {
-  display: flex;  
-  gap: 100px;
   margin-top: 5rem;
+}
+
+.main__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 100px;
+}
+
+.charts {
+  flex: 5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+}
+
+.filter select {
+  outline: none;
+  border: none;
+  padding: .25em;
+  margin-left: 1rem;
 }

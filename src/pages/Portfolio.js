@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
 import uuid from "react-uuid";
+import randomColor from "randomcolor";
 
 import BuyCoinModal from "../components/Modals/BuyCoinModal";
 import CoinsOwned from "../components/Coins/CoinsOwned";
@@ -19,6 +20,11 @@ function Portfolio({ coins }) {
     const [coinsOwn, setCoinsOwn] = useState([]);
     const [isBuyingOpen, setIsBuyingOpen] = useState(false);
     const [coinToBuy, setCoinToBuy] = useState({});
+    const [filterChartBy, setFilterChartBy] = useState("units");
+    const [chartLabels, setChartLabels] = useState([]);
+    const [chartUnitsData, setChartUnitsData] = useState([]);
+    const [chartInvestedData, setChartInvestedData] = useState([]);
+    const [chartColors, setChartColors] = useState([]);
 
     const { currentUser } = useAuth();
     const { updateUser, updateDocument, user, updateCoinPurchases } = useUser();
@@ -32,12 +38,34 @@ function Portfolio({ coins }) {
         const q = query(
             collection(db, `users/${currentUser.uid}`, "coinsPurchased")
         );
+
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const purchases = [];
+            const labels = [];
+            const totalUnitsPerCoin = [];
+            const colors = [];
+            const totalInvestedPerCoin = [];
+
             querySnapshot.forEach((doc) => {
+                let total = 0;
                 purchases.push(doc.data());
+                labels.push(doc.data().id.toUpperCase());
+                totalUnitsPerCoin.push(doc.data().total_units_purchased);
+                colors.push(randomColor());
+
+                doc.data().purchases.forEach(
+                    (purchase) =>
+                        (total += purchase.units * purchase.purchase_price)
+                );
+
+                totalInvestedPerCoin.push(total);
             });
+
             setCoinsOwn(purchases);
+            setChartLabels(labels);
+            setChartUnitsData(totalUnitsPerCoin);
+            setChartColors(colors);
+            setChartInvestedData(totalInvestedPerCoin);
         });
 
         return () => {
@@ -55,6 +83,12 @@ function Portfolio({ coins }) {
 
     function closeBuyModal() {
         setIsBuyingOpen(false);
+    }
+
+    function filterChartHandler(e) {
+        console.log(e.target.value);
+        setFilterChartBy(e.target.value);
+        console.log(filterChartBy);
     }
 
     function buyCoinHandler(units, total) {
@@ -108,18 +142,45 @@ function Portfolio({ coins }) {
                 <div className={styles.balance_wrapper}>
                     <p>Your Balance:</p>
                     <p className={styles.balance}>
-                        ${user.balance.toLocaleString()}
+                        ${user.balance?.toLocaleString()}
                     </p>
                 </div>
             </div>
             <main className={styles.main}>
-                <CoinsWatching
-                    coins={coins}
-                    favoriteCoins={favoriteCoins}
-                    openBuyModal={openBuyModal}
-                />
+                <div className={styles.main__top}>
+                    <CoinsWatching
+                        coins={coins}
+                        favoriteCoins={favoriteCoins}
+                        openBuyModal={openBuyModal}
+                    />
+                    <div className={styles.charts}>
+                        <PieChart
+                            labels={chartLabels}
+                            chartData={
+                                filterChartBy === "units"
+                                    ? chartUnitsData
+                                    : chartInvestedData
+                            }
+                            colors={chartColors}
+                        />
+                        {chartUnitsData.length > 0 && (
+                            <div className={styles.filter}>
+                                <label htmlFor="chartData">Filter Data:</label>
+                                <select
+                                    name="chartData"
+                                    id="chart_data"
+                                    onChange={filterChartHandler}
+                                >
+                                    <option value="units">Total Units</option>
+                                    <option value="invested">
+                                        Total $ Invested
+                                    </option>
+                                </select>
+                            </div>
+                        )}
+                    </div>
+                </div>
                 <CoinsOwned coinsOwned={coinsOwn} coins={coins} />
-                <PieChart />
             </main>
             {isBuyingOpen && (
                 <BuyCoinModal
