@@ -1,0 +1,17 @@
+/* .pie_chart_container {
+  width: 100%;
+} */
+
+.pie_chart {
+   width: 325px; 
+ }
+
+.no_chart {
+   background-color: var(--primary);
+   padding: 1rem 6rem;
+   border-radius: 5px;
+   text-align: center;
+   color: var(--secondary);
+   font-weight: bold;
+}
+
