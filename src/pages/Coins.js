@@ -9,7 +9,6 @@ import Top100Coins from "../components/Coins/Top100Coins";
 import TableResultsInfo from "../components/Table/TableResultsInfo";
 
 function Coins({ coins }) {
-    // const [coins, setCoins] = useState([]);
     const [filteredCoins, setFilteredCoins] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [coinsPerPage, setCoinsPerPage] = useState(5);
@@ -21,6 +20,7 @@ function Coins({ coins }) {
 
     useEffect(() => {
         if (effectRan.current === false) {
+            console.log(coins);
             setFilteredCoins(coins);
             async function getUserInfo() {
                 await getUser(currentUser.uid);

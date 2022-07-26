@@ -41,7 +41,7 @@ function App() {
                             <Route
                                 exact
                                 path="/"
-                                element={<Navigate to="/login" />}
+                                element={<Navigate to="/coins" />}
                             />
                             <Route path="/login" element={<Login />} />
                             <Route path="/signup" element={<Signup />} />
