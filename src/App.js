@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,14 +38,13 @@ function App() {
                     <div className="app_container">
                         <Navbar />
                         <Routes>
+                            <Route exact path="/" element={<Login />} />
+
+                            <Route exact path="/login" element={<Login />} />
+                            <Route exact path="/signup" element={<Signup />} />
+
                             <Route
                                 exact
-                                path="/"
-                                element={<Navigate to="/coins" />}
-                            />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/signup" element={<Signup />} />
-                            <Route
                                 path="/coins"
                                 element={
                                     <ProtectedRoute>
@@ -54,6 +53,7 @@ function App() {
                                 }
                             />
                             <Route
+                                exact
                                 path="/portfolio"
                                 element={
                                     <ProtectedRoute>

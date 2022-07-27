@@ -39,7 +39,7 @@ function Navbar() {
         try {
             setIsMobile(false);
             await logout();
-            navigate("./");
+            navigate("/", { replace: true });
         } catch (e) {
             console.log(e.message);
         }
