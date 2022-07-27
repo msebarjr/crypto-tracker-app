@@ -46,7 +46,7 @@ function DropdownRow({ coinData, purchaseInfo, openSellModal }) {
             <td>
                 <p>{purchaseInfo.units}</p>
             </td>
-            <td>
+            <td className={styles.hide_tablet}>
                 <p>
                     $
                     {purchaseInfo.purchase_price.toLocaleString(undefined, {
@@ -54,7 +54,7 @@ function DropdownRow({ coinData, purchaseInfo, openSellModal }) {
                     })}
                 </p>
             </td>
-            <td>
+            <td className={styles.hide_mobile}>
                 <p>
                     $
                     {pricePaid.toLocaleString(undefined, {
@@ -65,12 +65,12 @@ function DropdownRow({ coinData, purchaseInfo, openSellModal }) {
             <td style={{ color: color }}>
                 {isProfit ? (
                     <div className={styles.profit_loss}>
-                        <AiFillCaretUp />
+                        <AiFillCaretUp className={styles.hide_mobile} />
                         <p>{profitLossPercentage.toFixed(2)}%</p>
                     </div>
                 ) : (
                     <div className={styles.profit_loss}>
-                        <AiFillCaretDown />
+                        <AiFillCaretDown className={styles.hide_mobile} />
                         <p>{profitLossPercentage.toFixed(2)}%</p>
                     </div>
                 )}

@@ -42,15 +42,22 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 100px;
+  gap: 20px;
 }
 
 .charts {
   flex: 5;
   display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 50px;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .filter select {
@@ -58,4 +65,32 @@
   border: none;
   padding: .25em;
   margin-left: 1rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .main {
+    gap: 200px;
+  }
+ 
+  .main__top {
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 100px;
+  }
+
+  .charts {
+    flex: 1;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .welcome {
+    flex-direction: column;
+    gap: 30px;
+    border: none;
+  }
+
+  .main__top {
+    gap: 75px;
+  }
 }
