@@ -14,13 +14,10 @@ function CoinOwnedRow({ coin, currentCoin }) {
 
     function openDropdownHandler() {
         setOpenDropdown(true);
-        console.log("Coin: ", coin);
-        console.log("Current Coin: ", currentCoin);
     }
 
     function closeDropdownHandler() {
         setOpenDropdown(false);
-        console.log(coin);
     }
 
     return (

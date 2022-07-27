@@ -58,10 +58,12 @@ function Portfolio({ coins }) {
                 totalInvestedPerCoin.push(total);
             });
 
+            if (isBuyingOpen) document.body.style.overflow = "hidden";
+            else document.body.style.overflow = "visible";
+
             setCoinsOwn(purchases);
             setChartLabels(labels);
             setChartUnitsData(totalUnitsPerCoin);
-
             setChartInvestedData(totalInvestedPerCoin);
         });
 
@@ -71,7 +73,7 @@ function Portfolio({ coins }) {
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentUser.uid]);
+    }, [currentUser.uid, isBuyingOpen]);
 
     function openBuyModal(coinBuying) {
         setIsBuyingOpen(true);

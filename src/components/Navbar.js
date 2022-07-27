@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { RiCoinsLine } from "react-icons/ri";
 import { useNavigate, NavLink } from "react-router-dom";
-import { AiOutlineClose } from "react-icons/ai";
-import { FaBars } from "react-icons/fa";
 
 import Button from "./UI/Button";
 
@@ -24,6 +22,11 @@ function Navbar() {
 
     const { logout, currentUser } = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (toggleIcon) document.body.style.overflow = "hidden";
+        else document.body.style.overflow = "visible";
+    }, [toggleIcon]);
 
     function closeMobileHandler() {
         setIsMobile(false);
