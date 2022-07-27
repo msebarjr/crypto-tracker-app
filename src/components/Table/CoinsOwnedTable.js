@@ -1,6 +1,6 @@
 import CoinOwnedRow from "./CoinOwnedRow";
 
-import "../../styles/CoinsOwnedTable.module.css";
+import styles from "../../styles/CoinsOwnedTable.module.css";
 
 function CoinsOwnedTable({ coinsOwn, coins }) {
     let uniquePurchases = [];
@@ -10,10 +10,10 @@ function CoinsOwnedTable({ coinsOwn, coins }) {
             <thead>
                 <tr>
                     <th>Coin</th>
-                    <th>Price</th>
+                    <th className={styles.hide_mobile}>Price</th>
                     <th>24h</th>
-                    <th>Units Own</th>
-                    <th>Last 7 Days</th>
+                    <th># Own</th>
+                    <th className={styles.hide_tablet}>Last 7 Days</th>
                     <th></th>
                 </tr>
             </thead>

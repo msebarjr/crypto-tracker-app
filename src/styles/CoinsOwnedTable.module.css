@@ -35,3 +35,15 @@ td {
   color: black;
   padding: .5rem;
 }
+
+@media screen and (max-width: 600px) {
+  .hide_tablet {
+    display: none;
+  } 
+}
+
+@media screen and (max-width: 455px) {
+  .hide_mobile {
+    display: none;
+  } 
+}

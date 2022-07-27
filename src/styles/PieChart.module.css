@@ -3,7 +3,7 @@
 } */
 
 .pie_chart {
-   width: 325px; 
+   width: 575px; 
  }
 
 .no_chart {
@@ -13,5 +13,48 @@
    text-align: center;
    color: var(--secondary);
    font-weight: bold;
+}
+
+@media screen and (max-width: 1000px) {
+  .pie_chart {
+    width: 700px;
+  }
+
+}
+
+@media screen and (max-width: 870px) {
+  .pie_chart {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 675px) {
+  .pie_chart {
+    width: 500px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .pie_chart {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .pie_chart {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .pie_chart {
+    width: 300px;
+  }
+
+}
+@media screen and (max-width: 315px) {
+  .pie_chart {
+    width: 275px;
+  }
 }
 

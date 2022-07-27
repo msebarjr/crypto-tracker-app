@@ -24,3 +24,8 @@
   max-width: 500px;
 }
 
+@media screen and (max-width: 550px) {
+  .modal {
+    border-radius: 0;
+  }
+}

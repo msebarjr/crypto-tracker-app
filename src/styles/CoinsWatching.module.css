@@ -1,5 +1,5 @@
 .coins_watching {
-  flex: 2;
+  flex: 3;
 }
 
 .coins_watching h4 {
@@ -8,4 +8,22 @@
   margin-bottom: 1rem;
   letter-spacing: 2px;
   font-weight: 500;
+}
+
+
+@media screen and (max-width: 1000px) {
+  .coins_watching {
+    width: 80%;
+  }
+
+  .coins_watching h4 {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .coins_watching {
+    width: 100%;
+  }
+
 }

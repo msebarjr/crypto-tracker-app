@@ -33,3 +33,15 @@ td .pricing_24h {
   color: var(--secondary);
   letter-spacing: 2px;
 }
+
+@media screen and (max-width: 600px) {
+  .hide_tablet {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 455px) {
+  .hide_mobile {
+    display: none;
+  }
+}

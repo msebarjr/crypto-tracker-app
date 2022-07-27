@@ -1,18 +1,46 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
 import styles from "../styles/PieChart.module.css";
 
-function PieChart({ labels, chartData, colors }) {
-    ChartJS.register(ArcElement, Tooltip, Legend);
+function PieChart({ labels, chartData, title }) {
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        BarElement,
+        Title,
+        Tooltip,
+        Legend
+    );
+
+    const options = {
+        // responsive: true,
+        plugins: {
+            legend: {
+                position: "top",
+            },
+            title: {
+                display: true,
+                text: title,
+            },
+        },
+    };
 
     const coinData = {
         labels: labels,
         datasets: [
             {
-                label: "Total Units Per Coin",
+                label: title,
                 data: chartData,
-                backgroundColor: colors,
+                backgroundColor: "orange",
                 borderWidth: 0,
             },
         ],
@@ -22,7 +50,7 @@ function PieChart({ labels, chartData, colors }) {
         <div className={styles.pie_chart_container}>
             {chartData.length > 0 ? (
                 <div className={styles.pie_chart}>
-                    <Pie data={coinData} />
+                    <Bar option={options} data={coinData} />
                 </div>
             ) : (
                 <div className={styles.no_chart}>

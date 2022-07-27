@@ -14,13 +14,10 @@ function CoinOwnedRow({ coin, currentCoin }) {
 
     function openDropdownHandler() {
         setOpenDropdown(true);
-        console.log("Coin: ", coin);
-        console.log("Current Coin: ", currentCoin);
     }
 
     function closeDropdownHandler() {
         setOpenDropdown(false);
-        console.log(coin);
     }
 
     return (
@@ -42,7 +39,7 @@ function CoinOwnedRow({ coin, currentCoin }) {
                         </div>
                     </Link>
                 </td>
-                <td>
+                <td className={styles.hide_mobile}>
                     <Link
                         to={`/coin/${coin.id}`}
                         state={coin.id}
@@ -71,7 +68,6 @@ function CoinOwnedRow({ coin, currentCoin }) {
                     </Link>
                 </td>
                 <td>
-                    {" "}
                     <Link
                         to={`/coin/${coin.id}`}
                         state={coin.id}
@@ -80,7 +76,7 @@ function CoinOwnedRow({ coin, currentCoin }) {
                         {currentCoin.total_units_purchased}
                     </Link>
                 </td>
-                <td>
+                <td className={styles.hide_tablet}>
                     <Link
                         to={`/coin/${coin.id}`}
                         state={coin.id}

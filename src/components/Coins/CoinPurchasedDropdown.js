@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import DropdownHeader from "../Table/DropdownHeader";
@@ -15,6 +15,11 @@ function CoinPurchasedDropdown({ currentCoin, coinData }) {
     const { currentUser } = useAuth();
     const { updateDocument, user, updateCoinSelling, deleteDocument } =
         useUser();
+
+    useEffect(() => {
+        if (openSellModal) document.body.style.overflow = "hidden";
+        else document.body.style.overflow = "visible";
+    }, [openSellModal]);
 
     function closeSellModalHandler() {
         setOpenSellModal(false);

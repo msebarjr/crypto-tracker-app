@@ -3,17 +3,16 @@ import { toast } from "react-toastify";
 import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
 import uuid from "react-uuid";
-import randomColor from "randomcolor";
 
 import BuyCoinModal from "../components/Modals/BuyCoinModal";
 import CoinsOwned from "../components/Coins/CoinsOwned";
 import CoinsWatching from "../components/Coins/CoinsWatching";
+import PieChart from "../components/PieChart";
 
 import { useAuth } from "../contexts/AuthContext";
 import { useUser } from "../contexts/UserContext";
 
 import styles from "../styles/Portfolio.module.css";
-import PieChart from "../components/PieChart";
 
 function Portfolio({ coins }) {
     const [favoriteCoins, setFavoriteCoins] = useState([]);
@@ -24,7 +23,6 @@ function Portfolio({ coins }) {
     const [chartLabels, setChartLabels] = useState([]);
     const [chartUnitsData, setChartUnitsData] = useState([]);
     const [chartInvestedData, setChartInvestedData] = useState([]);
-    const [chartColors, setChartColors] = useState([]);
 
     const { currentUser } = useAuth();
     const { updateUser, updateDocument, user, updateCoinPurchases } = useUser();
@@ -43,7 +41,7 @@ function Portfolio({ coins }) {
             const purchases = [];
             const labels = [];
             const totalUnitsPerCoin = [];
-            const colors = [];
+
             const totalInvestedPerCoin = [];
 
             querySnapshot.forEach((doc) => {
@@ -51,7 +49,6 @@ function Portfolio({ coins }) {
                 purchases.push(doc.data());
                 labels.push(doc.data().id.toUpperCase());
                 totalUnitsPerCoin.push(doc.data().total_units_purchased);
-                colors.push(randomColor());
 
                 doc.data().purchases.forEach(
                     (purchase) =>
@@ -61,10 +58,12 @@ function Portfolio({ coins }) {
                 totalInvestedPerCoin.push(total);
             });
 
+            if (isBuyingOpen) document.body.style.overflow = "hidden";
+            else document.body.style.overflow = "visible";
+
             setCoinsOwn(purchases);
             setChartLabels(labels);
             setChartUnitsData(totalUnitsPerCoin);
-            setChartColors(colors);
             setChartInvestedData(totalInvestedPerCoin);
         });
 
@@ -74,7 +73,7 @@ function Portfolio({ coins }) {
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentUser.uid]);
+    }, [currentUser.uid, isBuyingOpen]);
 
     function openBuyModal(coinBuying) {
         setIsBuyingOpen(true);
@@ -86,9 +85,7 @@ function Portfolio({ coins }) {
     }
 
     function filterChartHandler(e) {
-        console.log(e.target.value);
         setFilterChartBy(e.target.value);
-        console.log(filterChartBy);
     }
 
     function buyCoinHandler(units, total) {
@@ -161,7 +158,11 @@ function Portfolio({ coins }) {
                                     ? chartUnitsData
                                     : chartInvestedData
                             }
-                            colors={chartColors}
+                            title={
+                                filterChartBy === "units"
+                                    ? "Total Units"
+                                    : "Total $ Invested"
+                            }
                         />
                         {chartUnitsData.length > 0 && (
                             <div className={styles.filter}>

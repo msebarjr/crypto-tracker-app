@@ -46,7 +46,7 @@
 .coin_actions {
   display: flex;
   margin-top: 0.5rem;
-  gap: 10px;
+  gap: 25px;
 }
 
 .coin_action_button:first-child {
@@ -68,3 +68,24 @@
   opacity: .75;
 }
 
+@media screen and (max-width: 1000px) {
+  .price_change {
+    width: 25%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .coin_info {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .price_change {
+    width: 40%;
+  }
+
+  .coin_actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
