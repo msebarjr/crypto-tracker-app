@@ -21,18 +21,20 @@ function Coins({ coins }) {
     useEffect(() => {
         if (effectRan.current === false) {
             setFilteredCoins(coins);
-
-            async function getUserInfo() {
-                await getUser(currentUser.uid);
-            }
-
-            getUserInfo();
         }
 
         return () => {
             effectRan.current = true;
         };
     }, [getUser, currentUser.uid, coins]);
+
+    useEffect(() => {
+        async function getUserInfo() {
+            await getUser(currentUser.uid);
+        }
+
+        getUserInfo();
+    }, [getUser, currentUser.uid]);
 
     // Get the current coin
     const indexOfLastCoin = currentPage * coinsPerPage;

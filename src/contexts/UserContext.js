@@ -9,7 +9,7 @@ export function useUser() {
 }
 
 export function UserContextProvider({ children }) {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState({});
 
     async function getUser(userUID) {
         const docRef = doc(db, "users", userUID);

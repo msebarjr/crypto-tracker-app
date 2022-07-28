@@ -4,7 +4,7 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { AuthContextProvider } from "./contexts/AuthContext";
+import { AuthContextProvider, useAuth } from "./contexts/AuthContext";
 import { UserContextProvider } from "./contexts/UserContext";
 
 import CoinPage from "./pages/CoinPage";
@@ -17,6 +17,7 @@ import Signup from "./pages/Signup";
 
 function App() {
     const [coins, setCoins] = useState([]);
+    const { currentUser } = useAuth();
 
     const effectRan = useRef(false);
 
@@ -39,8 +40,17 @@ function App() {
                     <div className="app_container">
                         <Navbar />
                         <Routes>
-                            <Route exact path="/" element={<Login />} />
-
+                            <Route
+                                exact
+                                path="/"
+                                element={
+                                    currentUser && currentUser ? (
+                                        <Coins coins={coins} />
+                                    ) : (
+                                        <Login />
+                                    )
+                                }
+                            />
                             <Route exact path="/login" element={<Login />} />
                             <Route exact path="/signup" element={<Signup />} />
 
