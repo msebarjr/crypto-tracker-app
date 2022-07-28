@@ -8,7 +8,7 @@ import CoinPriceChange from "../components/Coins/CoinPriceChange";
 
 import styles from "../styles/CoinPage.module.css";
 
-function CoinPage({ coins }) {
+function CoinPage() {
     const [coin, setCoin] = useState({});
 
     const location = useLocation();
@@ -24,7 +24,7 @@ function CoinPage({ coins }) {
 
     return (
         <div className={styles.coin_page_container}>
-            <CoinData coin={coin} coins={coins} />
+            <CoinData coin={coin} />
             <CoinPriceChange coin={coin} />
             <CoinInfo coin={coin} />
         </div>

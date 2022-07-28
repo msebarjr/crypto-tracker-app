@@ -7,12 +7,14 @@ import CoinSearch from "../components/Coins/CoinSearch";
 import Pagination from "../components/Pagination";
 import Top100Coins from "../components/Coins/Top100Coins";
 import TableResultsInfo from "../components/Table/TableResultsInfo";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function Coins({ coins }) {
     const [filteredCoins, setFilteredCoins] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [coinsPerPage, setCoinsPerPage] = useState(5);
     const [activePage, setActivePage] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
 
     const effectRan = useRef(false);
     const { currentUser } = useAuth();
@@ -20,6 +22,7 @@ function Coins({ coins }) {
 
     useEffect(() => {
         if (effectRan.current === false) {
+            setIsLoading(true);
             setFilteredCoins(coins);
         }
 
@@ -31,6 +34,7 @@ function Coins({ coins }) {
     useEffect(() => {
         async function getUserInfo() {
             await getUser(currentUser.uid);
+            setIsLoading(false);
         }
 
         getUserInfo();
@@ -61,21 +65,27 @@ function Coins({ coins }) {
 
     return (
         <div>
-            <CoinSearch coins={coins} filterCoin={filterCoinHandler} />
-            <TableResultsInfo
-                numberOfResults={numberOfResultsHandler}
-                // activePageNumber={activePageNumberHandler}
-                coinsPerPage={coinsPerPage}
-                totalCoins={filteredCoins.length}
-                resetActivePage={resetActivePageHandler}
-            />
-            <Top100Coins coins={currentCoins} />
-            <Pagination
-                coinsPerPage={coinsPerPage}
-                totalCoins={filteredCoins.length}
-                paginate={paginationHandler}
-                activePageNumber={activePage}
-            />
+            {isLoading ? (
+                <LoadingSpinner />
+            ) : (
+                <div>
+                    <CoinSearch coins={coins} filterCoin={filterCoinHandler} />
+                    <TableResultsInfo
+                        numberOfResults={numberOfResultsHandler}
+                        // activePageNumber={activePageNumberHandler}
+                        coinsPerPage={coinsPerPage}
+                        totalCoins={filteredCoins.length}
+                        resetActivePage={resetActivePageHandler}
+                    />
+                    <Top100Coins coins={currentCoins} />
+                    <Pagination
+                        coinsPerPage={coinsPerPage}
+                        totalCoins={filteredCoins.length}
+                        paginate={paginationHandler}
+                        activePageNumber={activePage}
+                    />
+                </div>
+            )}
         </div>
     );
 }
