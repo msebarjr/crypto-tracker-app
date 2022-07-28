@@ -78,6 +78,7 @@ function Portfolio({ coins }) {
     function openBuyModal(coinBuying) {
         setIsBuyingOpen(true);
         setCoinToBuy(coinBuying);
+        console.log("PORTFOLIO: ", coinBuying);
     }
 
     function closeBuyModal() {

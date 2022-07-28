@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,12 +14,9 @@ import Navbar from "./components/Navbar";
 import Portfolio from "./pages/Portfolio";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./pages/Signup";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
 
 function App() {
     const [coins, setCoins] = useState([]);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const effectRan = useRef(false);
 
@@ -29,16 +26,11 @@ function App() {
                 setCoins(response.data);
             });
         }
-        
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setIsLoggedIn(user ? true : false);
-        });
 
         return () => {
             effectRan.current = true;
-            unsubscribe();
         };
-    }, [isLoggedIn]);
+    }, []);
 
     return (
         <>
@@ -47,26 +39,16 @@ function App() {
                     <div className="app_container">
                         <Navbar />
                         <Routes>
-                            <Route
-                                exact
-                                path="/"
-                                element={
-                                    isLoggedIn ? (
-                                        <Navigate to="/coins" coins={coins} />
-                                    ) : (
-                                        <Login />
-                                    )
-                                }
-                            />
+                            <Route exact path="/" element={<Login />} />
 
-                            <Route path="/login" element={<Login />} />
+                            <Route exact path="/login" element={<Login />} />
                             <Route exact path="/signup" element={<Signup />} />
 
                             <Route
                                 exact
                                 path="/coins"
                                 element={
-                                    <ProtectedRoute loggedIn={isLoggedIn}>
+                                    <ProtectedRoute>
                                         <Coins coins={coins} />
                                     </ProtectedRoute>
                                 }
@@ -75,7 +57,7 @@ function App() {
                                 exact
                                 path="/portfolio"
                                 element={
-                                    <ProtectedRoute loggedIn={isLoggedIn}>
+                                    <ProtectedRoute>
                                         <Portfolio coins={coins} />
                                     </ProtectedRoute>
                                 }
@@ -84,7 +66,7 @@ function App() {
                                 path="/coin/:coinId"
                                 element={
                                     <ProtectedRoute>
-                                        <CoinPage />
+                                        <CoinPage coins={coins} />
                                     </ProtectedRoute>
                                 }
                             >
@@ -94,7 +76,7 @@ function App() {
                     </div>
                 </UserContextProvider>
             </AuthContextProvider>
-            <ToastContainer position="top-right" theme="colored" pauseOnHover />
+            <ToastContainer position="top-right" theme="colored" />
         </>
     );
 }

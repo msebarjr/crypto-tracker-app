@@ -6,22 +6,28 @@ import {
     AiFillCaretUp,
 } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../firebase";
+import uuid from "react-uuid";
 
 import Button from "../UI/Button";
+import BuyCoinModal from "../Modals/BuyCoinModal";
 import CoinSparkline from "./CoinSparkline";
 
-import styles from "../../styles/CoinStats.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { useUser } from "../../contexts/UserContext";
 
-function CoinStats({ coin }) {
+import styles from "../../styles/CoinStats.module.css";
+
+function CoinStats({ coin, coins }) {
     const [isWatching, setIsWacthing] = useState(false);
     const [favoriteCoins, setFavoriteCoins] = useState([]);
+    const [isBuyingOpen, setIsBuyingOpen] = useState(false);
+    const [coinToBuy, setCoinToBuy] = useState({});
+    const [coinsOwn, setCoinsOwn] = useState([]);
 
     const { currentUser } = useAuth();
-    const { updateDocument, updateUser } = useUser();
+    const { updateDocument, updateUser, user, updateCoinPurchases } = useUser();
 
     const priceColor =
         coin.market_data?.price_change_percentage_24h > 0
@@ -34,12 +40,30 @@ function CoinStats({ coin }) {
             updateUser(doc.data());
         });
 
+        const q = query(
+            collection(db, `users/${currentUser.uid}`, "coinsPurchased")
+        );
+
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const purchases = [];
+
+            querySnapshot.forEach((doc) => {
+                purchases.push(doc.data());
+            });
+
+            if (isBuyingOpen) document.body.style.overflow = "hidden";
+            else document.body.style.overflow = "visible";
+
+            setCoinsOwn(purchases);
+        });
+
         return () => {
             unsub();
+            unsubscribe();
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentUser.uid]);
+    }, [currentUser.uid, isBuyingOpen]);
 
     useEffect(() => {
         setIsWacthing(favoriteCoins.includes(coin.id));
@@ -55,6 +79,59 @@ function CoinStats({ coin }) {
         const coins = favoriteCoins.filter((favCoin) => favCoin !== coin.id);
         toast.error(`${coin.name} removed as Favorite`);
         updateDocument(currentUser.uid, { coinsWatching: coins });
+    }
+
+    function openBuyModal() {
+        const buying = coins.filter((c) => c.id === coin.id);
+
+        setCoinToBuy(buying[0]);
+        setIsBuyingOpen(true);
+    }
+
+    function closeBuyModal() {
+        setIsBuyingOpen(false);
+    }
+
+    function buyCoinHandler(units, total) {
+        const newBalance = user.balance - total;
+        let newTotalUnits = 0;
+        let coinDupData;
+        let previousPurchases = [];
+
+        const coinDuplicate = coinsOwn.filter(
+            (coin) => coin.id === coinToBuy.id
+        );
+
+        if (coinDuplicate.length > 0) {
+            coinDupData = coinDuplicate.pop();
+            newTotalUnits = coinDupData.total_units_purchased + units;
+            previousPurchases = coinDupData.purchases;
+        } else newTotalUnits = units;
+
+        updateCoinPurchases(currentUser.uid, coinToBuy, {
+            id: coinToBuy.id,
+            total_units_purchased: newTotalUnits,
+            name: coinToBuy.name,
+            purchases: [
+                ...previousPurchases,
+                {
+                    id: uuid(),
+                    units: units,
+                    purchase_price: coinToBuy.current_price,
+                    purchase_date: new Date(),
+                },
+            ],
+        });
+
+        updateDocument(currentUser.uid, {
+            balance: Number(newBalance.toFixed(2)),
+        });
+
+        toast.success(
+            `Congratulations! You just purchased ${units} units of ${coinToBuy.name}`
+        );
+
+        setIsBuyingOpen(false);
     }
 
     return (
@@ -94,8 +171,9 @@ function CoinStats({ coin }) {
                 </div>
             </div>
             <div className={styles.actions}>
-                <Button style={styles.buy_button}>Buy</Button>
-                <Button style={styles.sell_button}>Sell</Button>
+                <Button style={styles.buy_button} onClick={openBuyModal}>
+                    Buy
+                </Button>
 
                 {isWatching ? (
                     <div className={styles.watching}>
@@ -115,6 +193,13 @@ function CoinStats({ coin }) {
                 )}
             </div>
             <CoinSparkline data={coin.market_data?.sparkline_7d.price} />
+            {isBuyingOpen && (
+                <BuyCoinModal
+                    closeBuyModal={closeBuyModal}
+                    coinBuying={coinToBuy}
+                    buyCoin={buyCoinHandler}
+                />
+            )}
         </div>
     );
 }

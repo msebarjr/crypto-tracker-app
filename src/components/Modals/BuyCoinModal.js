@@ -6,9 +6,14 @@ import Modal from "./Modal";
 import { useUser } from "../../contexts/UserContext";
 
 import styles from "../../styles/CoinModal.module.css";
+import { useEffect } from "react";
 
-function BuyCoinModal({ closeBuyModal, coinBuying, buyCoin, active }) {
+function BuyCoinModal({ closeBuyModal, coinBuying, buyCoin }) {
     const { user } = useUser();
+
+    useEffect(() => {
+        console.log(coinBuying);
+    }, [coinBuying]);
 
     return (
         <Modal onClose={closeBuyModal}>

@@ -1,7 +1,4 @@
-import {    
-    AiFillCaretDown,
-    AiFillCaretUp,
-} from "react-icons/ai";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 
 import Button from "../UI/Button";
 
