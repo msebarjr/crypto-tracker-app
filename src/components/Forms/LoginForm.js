@@ -27,6 +27,7 @@ function LoginForm({ onSubmit, credentialsIsInvalid }) {
 
     function demoLoginHandler(e) {
         e.preventDefault();
+        onSubmit("demouser@gmail.com", "yankees3");
     }
 
     return (
