@@ -2,14 +2,14 @@ import { createContext, useContext, useState } from "react";
 import { collection, getDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-const UserContext = createContext();
+const UserContext = createContext({});
 
 export function useUser() {
     return useContext(UserContext);
 }
 
 export function UserContextProvider({ children }) {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState();
 
     async function getUser(userUID) {
         const docRef = doc(db, "users", userUID);
@@ -17,7 +17,7 @@ export function UserContextProvider({ children }) {
 
         if (docSnap.exists()) {
             setUser(docSnap.data());
-        } else console.log("No Document");
+        } else return false;
     }
 
     function updateUser(userInfo) {

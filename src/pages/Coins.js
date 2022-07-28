@@ -20,7 +20,6 @@ function Coins({ coins }) {
 
     useEffect(() => {
         if (effectRan.current === false) {
-            console.log(coins);
             setFilteredCoins(coins);
             async function getUserInfo() {
                 await getUser(currentUser.uid);

@@ -7,7 +7,7 @@ import { useUser } from "../../contexts/UserContext";
 
 import styles from "../../styles/CoinModal.module.css";
 
-function BuyCoinModal({ closeBuyModal, coinBuying, buyCoin }) {
+function BuyCoinModal({ closeBuyModal, coinBuying, buyCoin, active }) {
     const { user } = useUser();
 
     return (

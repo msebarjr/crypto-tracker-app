@@ -8,14 +8,14 @@ import {
     signOut,
 } from "firebase/auth";
 
-const AuthContext = createContext();
+const AuthContext = createContext({});
 
 export function useAuth() {
     return useContext(AuthContext);
 }
 
 export function AuthContextProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState();
+    const [currentUser, setCurrentUser] = useState({});
 
     function signup(email, password) {
         return createUserWithEmailAndPassword(auth, email, password);
