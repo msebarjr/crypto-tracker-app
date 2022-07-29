@@ -34,8 +34,6 @@ export function AuthContextProvider({ children }) {
             setCurrentUser(user);
         });
 
-        console.log("Context: ", AuthContext);
-
         return () => {
             unsubscribe();
         };

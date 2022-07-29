@@ -35,6 +35,7 @@ function CoinStats({ coin, coins }) {
             : "red";
 
     useEffect(() => {
+        console.log(coins);
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
             setFavoriteCoins(doc.data().coinsWatching);
             updateUser(doc.data());

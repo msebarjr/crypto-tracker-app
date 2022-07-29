@@ -7,7 +7,6 @@ import uuid from "react-uuid";
 import BuyCoinModal from "../components/Modals/BuyCoinModal";
 import CoinsOwned from "../components/Coins/CoinsOwned";
 import CoinsWatching from "../components/Coins/CoinsWatching";
-import LoadingSpinner from "../components/LoadingSpinner";
 import PieChart from "../components/PieChart";
 
 import { useAuth } from "../contexts/AuthContext";
@@ -24,14 +23,12 @@ function Portfolio({ coins }) {
     const [chartLabels, setChartLabels] = useState([]);
     const [chartUnitsData, setChartUnitsData] = useState([]);
     const [chartInvestedData, setChartInvestedData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
     const { currentUser } = useAuth();
     const { updateUser, updateDocument, user, updateCoinPurchases } = useUser();
 
     useEffect(() => {
         const unsub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-            setIsLoading(true);
             setFavoriteCoins(doc.data().coinsWatching);
             updateUser(doc.data());
         });
@@ -68,7 +65,6 @@ function Portfolio({ coins }) {
             setChartLabels(labels);
             setChartUnitsData(totalUnitsPerCoin);
             setChartInvestedData(totalInvestedPerCoin);
-            setIsLoading(false);
         });
 
         return () => {
@@ -136,76 +132,66 @@ function Portfolio({ coins }) {
     }
 
     return (
-        <>
-            {isLoading ? (
-                <LoadingSpinner />
-            ) : (
-                <div className={styles.portfolio_container}>
-                    <div className={styles.welcome}>
-                        <h4>
-                            Welcome, <span>{user.name}</span>
-                        </h4>
-                        <div className={styles.balance_wrapper}>
-                            <p>Your Balance:</p>
-                            <p className={styles.balance}>
-                                ${user.balance?.toLocaleString()}
-                            </p>
-                        </div>
-                    </div>
-                    <main className={styles.main}>
-                        <div className={styles.main__top}>
-                            <CoinsWatching
-                                coins={coins}
-                                favoriteCoins={favoriteCoins}
-                                openBuyModal={openBuyModal}
-                            />
-                            <div className={styles.charts}>
-                                <PieChart
-                                    labels={chartLabels}
-                                    chartData={
-                                        filterChartBy === "units"
-                                            ? chartUnitsData
-                                            : chartInvestedData
-                                    }
-                                    title={
-                                        filterChartBy === "units"
-                                            ? "Total Units"
-                                            : "Total $ Invested"
-                                    }
-                                />
-                                {chartUnitsData.length > 0 && (
-                                    <div className={styles.filter}>
-                                        <label htmlFor="chartData">
-                                            Filter Data:
-                                        </label>
-                                        <select
-                                            name="chartData"
-                                            id="chart_data"
-                                            onChange={filterChartHandler}
-                                        >
-                                            <option value="units">
-                                                Total Units
-                                            </option>
-                                            <option value="invested">
-                                                Total $ Invested
-                                            </option>
-                                        </select>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                        <CoinsOwned coinsOwned={coinsOwn} coins={coins} />
-                    </main>
-                    {isBuyingOpen && (
-                        <BuyCoinModal
-                            closeBuyModal={closeBuyModal}
-                            coinBuying={coinToBuy}
-                            buyCoin={buyCoinHandler}
-                        />
-                    )}
+        <div className={styles.portfolio_container}>
+            <div className={styles.welcome}>
+                <h4>
+                    Welcome, <span>{user.name}</span>
+                </h4>
+                <div className={styles.balance_wrapper}>
+                    <p>Your Balance:</p>
+                    <p className={styles.balance}>
+                        ${user.balance?.toLocaleString()}
+                    </p>
                 </div>
+            </div>
+            <main className={styles.main}>
+                <div className={styles.main__top}>
+                    <CoinsWatching
+                        coins={coins}
+                        favoriteCoins={favoriteCoins}
+                        openBuyModal={openBuyModal}
+                    />
+                    <div className={styles.charts}>
+                        <PieChart
+                            labels={chartLabels}
+                            chartData={
+                                filterChartBy === "units"
+                                    ? chartUnitsData
+                                    : chartInvestedData
+                            }
+                            title={
+                                filterChartBy === "units"
+                                    ? "Total Units"
+                                    : "Total $ Invested"
+                            }
+                        />
+                        {chartUnitsData.length > 0 && (
+                            <div className={styles.filter}>
+                                <label htmlFor="chartData">Filter Data:</label>
+                                <select
+                                    name="chartData"
+                                    id="chart_data"
+                                    onChange={filterChartHandler}
+                                >
+                                    <option value="units">Total Units</option>
+                                    <option value="invested">
+                                        Total $ Invested
+                                    </option>
+                                </select>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                <CoinsOwned coinsOwned={coinsOwn} coins={coins} />
+            </main>
+            {isBuyingOpen && (
+                <BuyCoinModal
+                    closeBuyModal={closeBuyModal}
+                    coinBuying={coinToBuy}
+                    buyCoin={buyCoinHandler}
+                />
             )}
-        </>
+        </div>
     );
 }
 
