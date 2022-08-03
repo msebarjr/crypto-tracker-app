@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 
 import { useAuth } from "../contexts/AuthContext";
 import { useUser } from "../contexts/UserContext";
@@ -9,12 +10,13 @@ import Top100Coins from "../components/Coins/Top100Coins";
 import TableResultsInfo from "../components/Table/TableResultsInfo";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-function Coins({ coins }) {
+function Coins() {
     const [filteredCoins, setFilteredCoins] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [coinsPerPage, setCoinsPerPage] = useState(5);
     const [activePage, setActivePage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
+    const [coins, setCoins] = useState({});
 
     const effectRan = useRef(false);
     const { currentUser } = useAuth();
@@ -22,8 +24,11 @@ function Coins({ coins }) {
 
     useEffect(() => {
         if (effectRan.current === false) {
-            setIsLoading(true);
-            setFilteredCoins(coins);
+            axios.get(process.env.REACT_APP_COIN_API_KEY).then((response) => {
+                setIsLoading(true);
+                setCoins(response.data);
+                setFilteredCoins(response.data);
+            });
         }
 
         return () => {

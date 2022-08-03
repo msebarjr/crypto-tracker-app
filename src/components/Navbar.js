@@ -21,6 +21,7 @@ function Navbar() {
     };
 
     const { logout, currentUser } = useAuth();
+
     const navigate = useNavigate();
 
     useEffect(() => {

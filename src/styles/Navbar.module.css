@@ -61,7 +61,18 @@ li {
   color: var(--primary);
   outline-color: var(--primary);
   border: none;
- 
+}
+
+.login_button {
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: .5em 2em;
+}
+
+.login_button:hover {
+  background-color: var(--secondary);
+  color: var(--primary);
+  border: 2px solid var(--primary);  
 }
 
 .nav_toggler {

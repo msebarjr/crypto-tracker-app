@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { AuthContextProvider, useAuth } from "./contexts/AuthContext";
+import { AuthContextProvider } from "./contexts/AuthContext";
 import { UserContextProvider } from "./contexts/UserContext";
 
 import CoinPage from "./pages/CoinPage";
@@ -15,9 +15,12 @@ import Portfolio from "./pages/Portfolio";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./pages/Signup";
 
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+
 function App() {
     const [coins, setCoins] = useState([]);
-    const { currentUser } = useAuth();
+    const [isSignedIn, setIsSignedIn] = useState();
 
     const effectRan = useRef(false);
 
@@ -28,10 +31,18 @@ function App() {
             });
         }
 
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIsSignedIn(true);
+            } else {
+                setIsSignedIn(false);
+            }
+        });
+
         return () => {
             effectRan.current = true;
         };
-    }, []);
+    }, [isSignedIn]);
 
     return (
         <>
@@ -44,22 +55,23 @@ function App() {
                                 exact
                                 path="/"
                                 element={
-                                    currentUser && currentUser ? (
-                                        <Coins coins={coins} />
-                                    ) : (
+                                    !isSignedIn ? (
                                         <Login />
+                                    ) : (
+                                        <Navigate to="/coins" />
                                     )
                                 }
                             />
-                            <Route exact path="/login" element={<Login />} />
+
+                            <Route exact path="/" element={<Login />} />
                             <Route exact path="/signup" element={<Signup />} />
 
                             <Route
                                 exact
                                 path="/coins"
                                 element={
-                                    <ProtectedRoute>
-                                        <Coins coins={coins} />
+                                    <ProtectedRoute isSignedIn={isSignedIn}>
+                                        <Coins />
                                     </ProtectedRoute>
                                 }
                             />
@@ -67,7 +79,7 @@ function App() {
                                 exact
                                 path="/portfolio"
                                 element={
-                                    <ProtectedRoute>
+                                    <ProtectedRoute isSignedIn={isSignedIn}>
                                         <Portfolio coins={coins} />
                                     </ProtectedRoute>
                                 }
@@ -75,13 +87,14 @@ function App() {
                             <Route
                                 path="/coin/:coinId"
                                 element={
-                                    <ProtectedRoute>
+                                    <ProtectedRoute isSignedIn={isSignedIn}>
                                         <CoinPage coins={coins} />
                                     </ProtectedRoute>
                                 }
                             >
                                 <Route path=":coinId" />
                             </Route>
+                            <Route path="*" element={<Navigate to="/" />} />
                         </Routes>
                     </div>
                 </UserContextProvider>
